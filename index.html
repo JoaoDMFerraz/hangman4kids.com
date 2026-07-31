@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Hangman Game for Kids</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 25%, #6BCB77 50%, #4D96FF 75%, #FF6B9D 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 10px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes colorShift {
+            0% { stroke: #FF6B6B; }
+            25% { stroke: #FFD93D; }
+            50% { stroke: #6BCB77; }
+            75% { stroke: #4D96FF; }
+            100% { stroke: #FF6B9D; }
+        }
+
+        @keyframes eyeColorShift {
+            0% { fill: #FF6B6B; }
+            25% { fill: #FFD93D; }
+            50% { fill: #6BCB77; }
+            75% { fill: #4D96FF; }
+            100% { fill: #FF6B9D; }
+        }
+
+        .container {
+            background: linear-gradient(135deg, #FFFACD 0%, #FFE4B5 100%);
+            padding: 28px;
+            border-radius: 35px;
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.15);
+            max-width: 90vw;
+            width: 100%;
+            border: 6px solid #FFD700;
+        }
+
+        h1 {
+            text-align: center;
+            color: #FF6B6B;
+            margin-bottom: 10px;
+            font-size: 3em;
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+            animation: bounce 2s infinite;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #FF8C42;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-style: italic;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .game-left {
+            flex: 0.55;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%;
+            min-height: 0;
+        }
+
+        .game-right {
+            flex: 1.4;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%;
+            min-height: 0;
+        }
+
+        .hangman-section {
+            text-align: center;
+            background: white;
+            padding: 18px;
+            border-radius: 25px;
+            border: 4px solid #FF6B9D;
+            box-shadow: 0 4px 16px rgba(255, 107, 157, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .hangman-section svg {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            max-height: 95%;
+        }
+
+        .hangman-section svg circle {
+            animation: colorShift 15s ease infinite;
+        }
+
+        .hangman-section svg line {
+            animation: colorShift 15s ease infinite;
+        }
+
+        .hangman-section svg path {
+            animation: colorShift 15s ease infinite;
+        }
+
+        .hangman-section svg #eyeLeft,
+        .hangman-section svg #eyeRight {
+            animation: eyeColorShift 15s ease infinite;
+        }
+
+        .word-section {
+            background: white;
+            padding: 18px;
+            border-radius: 25px;
+            border: 4px solid #4D96FF;
+            box-shadow: 0 4px 16px rgba(77, 150, 255, 0.15);
+            flex: 0.6;
+            min-height: 0;
+        }
+
+        .word-display {
+            font-size: 2.5em;
+            letter-spacing: 8px;
+            text-align: center;
+            margin-bottom: 18px;
+            font-weight: bold;
+            color: #4D96FF;
+            font-family: 'Courier New', monospace;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+            min-height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-break: break-word;
+        }
+
+        .stats-display {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #FFD93D 0%, #FFEA9C 100%);
+            padding: 16px 20px;
+            border-radius: 15px;
+            border: 3px solid #FF8C42;
+            text-align: center;
+            flex: 1;
+            min-width: 130px;
+            box-shadow: 0 4px 12px rgba(255, 140, 66, 0.15);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 2.4em;
+            color: #FF6B6B;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .hint-section {
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            padding: 12px;
+            border-radius: 20px;
+            border: 4px solid #6BCB77;
+            margin-top: 10px;
+        }
+
+        .hint-btn {
+            flex: 1;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #6BCB77 0%, #7FD899 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(107, 203, 119, 0.2);
+            font-family: inherit;
+            min-width: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.3;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+
+        .hint-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(107, 203, 119, 0.35);
+        }
+
+        .hint-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            background: #999;
+        }
+
+        .alphabet {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+            background: white;
+            padding: 20px;
+            border-radius: 30px;
+            border: 5px solid #6BCB77;
+            box-shadow: 0 5px 20px rgba(107, 203, 119, 0.2);
+        }
+
+        .keyboard-section {
+            background: white;
+            padding: 18px;
+            border-radius: 25px;
+            border: 4px solid #FFD93D;
+            box-shadow: 0 4px 16px rgba(255, 217, 61, 0.15);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            flex: 4;
+            min-height: 0;
+        }
+
+        .keyboard-label {
+            text-align: center;
+            font-weight: bold;
+            color: #FF8C42;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            flex: 0.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .keyboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(38px, 1fr));
+            gap: 8px;
+            flex: 0.6;
+            min-height: 0;
+        }
+
+        @media (min-width: 1400px) {
+            .keyboard-grid {
+                grid-template-columns: repeat(13, 1fr);
+            }
+        }
+
+        @media (min-width: 1100px) and (max-width: 1399px) {
+            .keyboard-grid {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+
+        @media (min-width: 800px) and (max-width: 1099px) {
+            .keyboard-grid {
+                grid-template-columns: repeat(8, 1fr);
+            }
+        }
+
+        .letter-btn {
+            padding: 11px;
+            font-size: 1.15em;
+            font-weight: bold;
+            border: 3px solid #FFD93D;
+            background: linear-gradient(135deg, #FFE66D 0%, #FFED4E 100%);
+            color: #333;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            box-shadow: 0 4px 10px rgba(255, 217, 61, 0.3);
+        }
+
+        .letter-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #FFD93D 0%, #FFE66D 100%);
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(255, 217, 61, 0.5);
+        }
+
+        .letter-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #DDD;
+            border-color: #999;
+            color: #999;
+        }
+
+        .message {
+            display: none;
+        }
+
+        /* Modal Popup Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #FFFACD, #FFE4B5);
+            border: 8px solid #FFD700;
+            border-radius: 40px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 60px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-message {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        .modal-message.win {
+            color: #6BCB77;
+            animation: bounce 0.6s ease;
+        }
+
+        .modal-message.lose {
+            color: #FF6B6B;
+        }
+
+        .modal-button {
+            background: linear-gradient(135deg, #4D96FF 0%, #7BB8FF 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 6px 20px rgba(77, 150, 255, 0.3);
+            margin-top: 20px;
+        }
+
+        .modal-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(77, 150, 255, 0.5);
+        }
+
+        .modal-button:active {
+            transform: translateY(0);
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotateZ(360deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            width: 10px;
+            height: 10px;
+            background: #FFD93D;
+            animation: confetti-fall 3s ease-in forwards;
+            z-index: 9999;
+        }
+
+        .confetti.pink {
+            background: #FF6B6B;
+        }
+
+        .confetti.blue {
+            background: #4D96FF;
+        }
+
+        .confetti.green {
+            background: #6BCB77;
+        }
+
+        .confetti.orange {
+            background: #FF8C42;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .buttons button {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 18px 35px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8383 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4D96FF 0%, #7BB8FF 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(77, 150, 255, 0.4);
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .difficulty-buttons button {
+            flex: 1;
+        }
+
+        .btn-easy, .btn-hard {
+            padding: 16px 28px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-easy {
+            background: linear-gradient(135deg, #6BCB77 0%, #7FD899 100%);
+            color: white;
+        }
+
+        .btn-easy:hover:not(.disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(107, 203, 119, 0.3);
+        }
+
+        .btn-easy.active {
+            box-shadow: 0 6px 16px rgba(107, 203, 119, 0.6);
+            transform: scale(1.05);
+        }
+
+        .btn-hard {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8383 100%);
+            color: white;
+        }
+
+        .btn-hard:hover:not(.disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-hard.active {
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.6);
+            transform: scale(1.05);
+        }
+
+        .difficulty-label {
+            font-size: 0.9em;
+            color: #5c5349;
+            font-weight: bold;
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 900px) {
+            .game-container {
+                flex-direction: column;
+            }
+
+            .game-left, .game-right {
+                flex: 1;
+                height: auto;
+                gap: 10px;
+            }
+
+            .game-right {
+                flex-direction: column;
+            }
+
+            .hangman-section {
+                min-height: auto;
+            }
+
+            .keyboard-section {
+                min-height: auto;
+                flex: auto;
+            }
+
+            .word-section {
+                flex: auto;
+            }
+
+            .keyboard-grid {
+                grid-template-columns: repeat(6, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                border-width: 6px;
+            }
+
+            .game-container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .game-left, .game-right {
+                flex: 1;
+                height: auto;
+                gap: 10px;
+            }
+
+            .game-right {
+                flex-direction: column;
+            }
+
+            .hangman-section {
+                min-height: auto;
+            }
+
+            .keyboard-section {
+                min-height: auto;
+                flex: auto;
+            }
+
+            .word-section {
+                flex: auto;
+            }
+
+            .keyboard-grid {
+                grid-template-columns: repeat(5, 1fr) !important;
+            }
+
+            h1 {
+                font-size: 2.2em;
+                margin-bottom: 10px;
+            }
+
+            .word-display {
+                font-size: 2.8em;
+                letter-spacing: 10px;
+                min-height: 60px;
+            }
+
+            .letter-btn {
+                padding: 10px;
+                font-size: 1em;
+            }
+
+            .stat-box {
+                min-width: 100px;
+                padding: 12px 20px;
+            }
+
+            .stat-value {
+                font-size: 2em;
+            }
+
+            .btn-primary, .btn-secondary {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Win/Lose Modal Popup -->
+    <div class="modal" id="messageModal">
+        <div class="modal-content">
+            <div class="modal-message" id="modalMessage"></div>
+            <button class="modal-button" onclick="closeModal()">Play Again!</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Hangman</h1>
+        <div class="subtitle">Kids Edition</div>
+
+        <div class="game-container">
+            <div class="game-left">
+                <div class="hangman-section">
+                    <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Stick Figure Man -->
+                        <!-- Head -->
+                        <circle id="head" cx="110" cy="60" r="20" stroke="#333" stroke-width="3" fill="none" style="display: none;"/>
+                        
+                        <!-- Eyes and Mouth (appear with head) -->
+                        <circle id="eyeLeft" cx="105" cy="57" r="2" fill="#333" style="display: none;"/>
+                        <circle id="eyeRight" cx="115" cy="57" r="2" fill="#333" style="display: none;"/>
+                        <path id="mouth" d="M 105 65 Q 110 68 115 65" stroke="#333" stroke-width="2" fill="none" style="display: none;"/>
+
+                        <!-- Body (vertical line) -->
+                        <line id="body" x1="110" y1="80" x2="110" y2="150" stroke="#333" stroke-width="3" style="display: none;"/>
+
+                        <!-- Left Arm -->
+                        <line id="leftarm" x1="110" y1="100" x2="70" y2="120" stroke="#333" stroke-width="3" style="display: none;"/>
+
+                        <!-- Right Arm -->
+                        <line id="rightarm" x1="110" y1="100" x2="150" y2="120" stroke="#333" stroke-width="3" style="display: none;"/>
+
+                        <!-- Left Leg -->
+                        <line id="leftleg" x1="110" y1="150" x2="80" y2="210" stroke="#333" stroke-width="3" style="display: none;"/>
+
+                        <!-- Right Leg -->
+                        <line id="rightleg" x1="110" y1="150" x2="140" y2="210" stroke="#333" stroke-width="3" style="display: none;"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="game-right">
+                <div class="word-section">
+                    <div class="word-display" id="wordDisplay"></div>
+
+                    <div class="stats-display">
+                        <div class="stat-box">
+                            <div class="stat-label">Chances Left</div>
+                            <div class="stat-value" id="triesRemaining">6</div>
+                        </div>
+                        <button class="hint-btn" id="hintBtn" onclick="showHint()">💡 Get Hint</button>
+                    </div>
+                </div>
+
+                <div class="keyboard-section">
+                    <div class="keyboard-label">Click Letters or Use Your Keyboard</div>
+                    <div class="keyboard-grid" id="alphabet"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn-primary" onclick="resetGame()">Reset</button>
+            <button class="btn-secondary" onclick="newGame()">New Word</button>
+            <div class="difficulty-buttons">
+                <button class="btn-easy active" id="easyBtn" onclick="setDifficulty('easy')">Easy</button>
+                <button class="btn-hard" id="hardBtn" onclick="setDifficulty('hard')">Hard</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // EASY WORDS (5-7 years) - 210+ words
+        const easyWords = [
+            { word: 'APPLE', hint: 'A red or green fruit that grows on trees' },
+            { word: 'BABY', hint: 'A very young child' },
+            { word: 'BALL', hint: 'Round toy you can throw' },
+            { word: 'BANANA', hint: 'Yellow curved fruit' },
+            { word: 'BEAR', hint: 'Large furry animal' },
+            { word: 'BED', hint: 'Furniture for sleeping' },
+            { word: 'BEE', hint: 'Insect that makes honey' },
+            { word: 'BELL', hint: 'Metal object that rings' },
+            { word: 'BIRD', hint: 'Animal with wings and feathers' },
+            { word: 'BOAT', hint: 'Vehicle that floats on water' },
+            { word: 'BOOK', hint: 'Pages with words and pictures' },
+            { word: 'BOX', hint: 'Square container' },
+            { word: 'BOY', hint: 'Young male person' },
+            { word: 'BREAD', hint: 'Baked food made from flour' },
+            { word: 'BUBBLE', hint: 'Round ball of air' },
+            { word: 'BUTTERFLY', hint: 'An insect with colorful wings that flies' },
+            { word: 'BUTTON', hint: 'Small fastener on clothes' },
+            { word: 'CAP', hint: 'Hat worn on head' },
+            { word: 'CAR', hint: 'Vehicle with four wheels' },
+            { word: 'CARROT', hint: 'Orange vegetable' },
+            { word: 'CAT', hint: 'Pet animal with whiskers' },
+            { word: 'CHAIR', hint: 'Furniture you sit on' },
+            { word: 'CHEESE', hint: 'Yellow food made from milk' },
+            { word: 'CHERRY', hint: 'Small red fruit' },
+            { word: 'CHICKEN', hint: 'Bird that lays eggs' },
+            { word: 'CIRCLE', hint: 'Round shape' },
+            { word: 'CLOCK', hint: 'Device that shows time' },
+            { word: 'CLOUD', hint: 'Fluffy thing in the sky' },
+            { word: 'COAT', hint: 'Clothing worn outside' },
+            { word: 'COIN', hint: 'Metal money' },
+            { word: 'COLD', hint: 'Low temperature' },
+            { word: 'COMB', hint: 'Tool for brushing hair' },
+            { word: 'COOKIE', hint: 'Sweet baked treat' },
+            { word: 'CORN', hint: 'Yellow vegetable or grain' },
+            { word: 'COW', hint: 'Farm animal that makes milk' },
+            { word: 'CRAYON', hint: 'Colored drawing stick' },
+            { word: 'CROWN', hint: 'Jewelry worn on the head' },
+            { word: 'CUP', hint: 'Container for drinking' },
+            { word: 'DANCE', hint: 'Moving to music' },
+            { word: 'DARK', hint: 'Without light' },
+            { word: 'DESK', hint: 'Furniture for working' },
+            { word: 'DIAMOND', hint: 'Precious shiny gem' },
+            { word: 'DIME', hint: 'Small coin' },
+            { word: 'DOG', hint: 'Pet animal that barks' },
+            { word: 'DOLL', hint: 'Toy that looks like a person' },
+            { word: 'DOLPHIN', hint: 'Smart sea mammal' },
+            { word: 'DOOR', hint: 'Entrance to a room' },
+            { word: 'DRUM', hint: 'Musical instrument you hit' },
+            { word: 'DUCK', hint: 'Bird that swims' },
+            { word: 'DUSK', hint: 'Time when day turns to night' },
+            { word: 'DUST', hint: 'Fine powder particles' },
+            { word: 'EAR', hint: 'Body part you hear with' },
+            { word: 'EAGLE', hint: 'Large bird that hunts' },
+            { word: 'EARTH', hint: 'The planet we live on' },
+            { word: 'EIGHT', hint: 'Number after seven' },
+            { word: 'ELBOW', hint: 'Joint in your arm' },
+            { word: 'ELK', hint: 'Large deer animal' },
+            { word: 'ELF', hint: 'Magical small creature' },
+            { word: 'EGG', hint: 'Round food laid by birds' },
+            { word: 'ERASER', hint: 'Tool to remove pencil marks' },
+            { word: 'ERROR', hint: 'Mistake' },
+            { word: 'EYE', hint: 'Body part you see with' },
+            { word: 'FACE', hint: 'Front part of your head' },
+            { word: 'FAIRY', hint: 'Magical flying person' },
+            { word: 'FALL', hint: 'Season after summer' },
+            { word: 'FAN', hint: 'Device that blows air' },
+            { word: 'FARM', hint: 'Land where crops grow' },
+            { word: 'FAST', hint: 'Moving quickly' },
+            { word: 'FAT', hint: 'Having extra weight' },
+            { word: 'FENCE', hint: 'Structure that encloses land' },
+            { word: 'FERN', hint: 'Leafy green plant' },
+            { word: 'FERRY', hint: 'Boat that carries people' },
+            { word: 'FEVER', hint: 'High body temperature' },
+            { word: 'FIG', hint: 'Sweet purple fruit' },
+            { word: 'FILE', hint: 'Tool with ridges for smoothing' },
+            { word: 'FILM', hint: 'Movie' },
+            { word: 'FINGER', hint: 'Part of your hand' },
+            { word: 'FIRE', hint: 'Hot flames' },
+            { word: 'FIREFLY', hint: 'Glowing insect' },
+            { word: 'FIRST', hint: 'Number one' },
+            { word: 'FISH', hint: 'Animal that lives in water' },
+            { word: 'FIVE', hint: 'Number after four' },
+            { word: 'FLAG', hint: 'Colored cloth on a pole' },
+            { word: 'FLAME', hint: 'Orange part of fire' },
+            { word: 'FLAT', hint: 'Smooth and level' },
+            { word: 'FLEA', hint: 'Tiny jumping insect' },
+            { word: 'FLIGHT', hint: 'Journey in an airplane' },
+            { word: 'FLOAT', hint: 'Stay on top of water' },
+            { word: 'FLOCK', hint: 'Group of birds' },
+            { word: 'FLOOD', hint: 'Overflow of water' },
+            { word: 'FLOOR', hint: 'Ground inside a building' },
+            { word: 'FLOUR', hint: 'Ground grain for baking' },
+            { word: 'FLOWER', hint: 'Colorful plant with petals' },
+            { word: 'FLY', hint: 'Move through the air' },
+            { word: 'FOAM', hint: 'Light airy bubbles' },
+            { word: 'FOG', hint: 'Thick mist' },
+            { word: 'FOLLOW', hint: 'Go after someone' },
+            { word: 'FOOD', hint: 'What you eat' },
+            { word: 'FOOT', hint: 'Body part at bottom of leg' },
+            { word: 'FOOTBALL', hint: 'Ball sport' },
+            { word: 'FOREST', hint: 'Large area with many trees' },
+            { word: 'FORK', hint: 'Eating utensil with prongs' },
+            { word: 'FORTY', hint: 'Number with four tens' },
+            { word: 'FOSSIL', hint: 'Ancient preserved remains' },
+            { word: 'FOUNTAIN', hint: 'Water feature' },
+            { word: 'FOUR', hint: 'Number after three' },
+            { word: 'FOX', hint: 'Red furry animal' },
+            { word: 'FRAME', hint: 'Border around a picture' },
+            { word: 'FREEZE', hint: 'Turn to ice' },
+            { word: 'FRESH', hint: 'Recently made or picked' },
+            { word: 'FRIEND', hint: 'Person you like' },
+            { word: 'FROG', hint: 'Jumping green animal' },
+            { word: 'FROM', hint: 'Starting place' },
+            { word: 'FROST', hint: 'Ice crystals on surfaces' },
+            { word: 'FRUIT', hint: 'Sweet food from plants' },
+            { word: 'FUEL', hint: 'Energy source like gas' },
+            { word: 'FULL', hint: 'Completely filled' },
+            { word: 'FUN', hint: 'Enjoyable activity' },
+            { word: 'FUNNY', hint: 'Amusing or humorous' },
+            { word: 'FUR', hint: 'Hair on animals' },
+            { word: 'FUTURE', hint: 'Time yet to come' },
+            { word: 'GAIN', hint: 'Increase or profit' },
+            { word: 'GAME', hint: 'Activity for fun' },
+            { word: 'GAP', hint: 'Opening or space' },
+            { word: 'GARAGE', hint: 'Building to park cars' },
+            { word: 'GARDEN', hint: 'Place to grow plants' },
+            { word: 'GARLIC', hint: 'Pungent vegetable bulb' },
+            { word: 'GAS', hint: 'Fuel for cars' },
+            { word: 'GATE', hint: 'Door in a fence' },
+            { word: 'GATHER', hint: 'Collect together' },
+            { word: 'GAUGE', hint: 'Measuring device' },
+            { word: 'GAVE', hint: 'Past tense of give' },
+            { word: 'GEAR', hint: 'Equipment or tooth' },
+            { word: 'GENTLE', hint: 'Soft or kind' },
+            { word: 'GERBIL', hint: 'Small pet rodent' },
+            { word: 'GERM', hint: 'Tiny disease organism' },
+            { word: 'GHOST', hint: 'Spirit of a dead person' },
+            { word: 'GIANT', hint: 'Extremely large being' },
+            { word: 'GIFT', hint: 'Present given to someone' },
+            { word: 'GIRAFFE', hint: 'Tall African animal' },
+            { word: 'GIRL', hint: 'Young female person' },
+            { word: 'GIVE', hint: 'Hand something to someone' },
+            { word: 'GLAD', hint: 'Happy and pleased' },
+            { word: 'GLASS', hint: 'Clear drinking container' },
+            { word: 'GLIDE', hint: 'Move smoothly' },
+            { word: 'GLIMMER', hint: 'Faint light' },
+            { word: 'GLIMPSE', hint: 'Brief look' },
+            { word: 'GLITTER', hint: 'Sparkling shine' },
+            { word: 'GLOBE', hint: 'Model of earth' },
+            { word: 'GLOOM', hint: 'Darkness and sadness' },
+            { word: 'GLOVE', hint: 'Hand covering' },
+            { word: 'GLOW', hint: 'Soft light' },
+            { word: 'GLUE', hint: 'Sticky substance' },
+            { word: 'GOAL', hint: 'Something to achieve' },
+            { word: 'GOAT', hint: 'Farm animal with horns' },
+            { word: 'GOBLIN', hint: 'Mischievous creature' },
+            { word: 'GOLD', hint: 'Yellow precious metal' },
+            { word: 'GOLF', hint: 'Game played with clubs' },
+            { word: 'GOOD', hint: 'Positive or nice' },
+            { word: 'GOOSE', hint: 'Water bird larger than duck' },
+            { word: 'GORILLA', hint: 'Large ape' },
+            { word: 'GOSPEL', hint: 'Religious teaching' },
+            { word: 'GOVERNMENT', hint: 'System of ruling' },
+            { word: 'GOWN', hint: 'Fancy dress' },
+            { word: 'GRAB', hint: 'Seize suddenly' },
+            { word: 'GRACE', hint: 'Elegant beauty' },
+            { word: 'GRADE', hint: 'Level or mark' },
+            { word: 'GRAIN', hint: 'Seeds of cereal plants' },
+            { word: 'GRAND', hint: 'Large and impressive' },
+            { word: 'GRANT', hint: 'Give or allow' },
+            { word: 'GRAPE', hint: 'Small round fruit' },
+            { word: 'GRASP', hint: 'Hold firmly' },
+            { word: 'GRASS', hint: 'Green plant covering ground' },
+            { word: 'GRATE', hint: 'Shred with a tool' },
+            { word: 'GRATEFUL', hint: 'Thankful' },
+            { word: 'GRAVE', hint: 'Serious or burial place' },
+            { word: 'GRAVEL', hint: 'Small stones' },
+            { word: 'GRAVITY', hint: 'Force pulling down' },
+            { word: 'GRAVY', hint: 'Meat sauce' },
+            { word: 'GREAT', hint: 'Very good or large' },
+            { word: 'GREEN', hint: 'Color of plants' },
+            { word: 'GREET', hint: 'Welcome or say hello' },
+            { word: 'GRIN', hint: 'Big happy smile' },
+            { word: 'GRIND', hint: 'Crush into powder' },
+            { word: 'GRIP', hint: 'Hold tightly' },
+            { word: 'GRIT', hint: 'Courage or sand particles' },
+            { word: 'GROAN', hint: 'Make a sad sound' },
+            { word: 'GROCERY', hint: 'Food store' },
+            { word: 'GROUND', hint: 'Earth or soil' },
+            { word: 'GROUP', hint: 'Collection of things' },
+            { word: 'GROVE', hint: 'Small group of trees' },
+            { word: 'GROW', hint: 'Become bigger' },
+            { word: 'GROWL', hint: 'Make deep sound' },
+            { word: 'GROWTH', hint: 'Increase in size' },
+            { word: 'GRUB', hint: 'Food or insect larva' },
+            { word: 'GUARD', hint: 'Protect or watcher' },
+            { word: 'GUESS', hint: 'Estimate or think' },
+            { word: 'GUEST', hint: 'Visitor' },
+            { word: 'GUIDE', hint: 'Lead or direct' },
+            { word: 'GUILD', hint: 'Professional association' },
+            { word: 'GUILT', hint: 'Feeling of wrongdoing' },
+            { word: 'GUINEA', hint: 'African region' },
+            { word: 'GUITAR', hint: 'Stringed instrument' },
+            { word: 'GUN', hint: 'Weapon that shoots bullets' },
+            { word: 'GUT', hint: 'Stomach or remove insides' },
+            { word: 'GUY', hint: 'Boy or man' },
+            { word: 'GYMNASIUM', hint: 'Fitness facility' },
+            { word: 'GYMNAST', hint: 'Athletic performer' },
+            { word: 'GYRATE', hint: 'Spin or rotate' },
+        ];
+
+        // HARD WORDS (8-10 years) - 266+ words
+        const hardWords = [
+            { word: 'ABILITY', hint: 'Skill or talent' },
+            { word: 'ABOLISH', hint: 'End or eliminate' },
+            { word: 'ABSOLUTE', hint: 'Complete or total' },
+            { word: 'ABSORB', hint: 'Take in or soak up' },
+            { word: 'ABSTRACT', hint: 'Not concrete' },
+            { word: 'ABUNDANT', hint: 'Plentiful or ample' },
+            { word: 'ACADEMY', hint: 'School or institution' },
+            { word: 'ACCELERATE', hint: 'Speed up' },
+            { word: 'ACCENT', hint: 'Pronunciation or emphasis' },
+            { word: 'ACCEPT', hint: 'Receive or agree to' },
+            { word: 'ACCESS', hint: 'Way to enter' },
+            { word: 'ACCIDENT', hint: 'Unplanned event' },
+            { word: 'ACCOMPANY', hint: 'Go with' },
+            { word: 'ACCOMPLISH', hint: 'Complete successfully' },
+            { word: 'ACCORD', hint: 'Agreement' },
+            { word: 'ACCORDING', hint: 'As stated by' },
+            { word: 'ACCOUNT', hint: 'Narrative or financial record' },
+            { word: 'ACCUMULATE', hint: 'Gather together' },
+            { word: 'ACCURACY', hint: 'Correctness' },
+            { word: 'ACCURATE', hint: 'Precise or correct' },
+            { word: 'ACCUSE', hint: 'Charge with wrongdoing' },
+            { word: 'ACHIEVE', hint: 'Accomplish or attain' },
+            { word: 'ACID', hint: 'Sour chemical substance' },
+            { word: 'ACKNOWLEDGE', hint: 'Accept or recognize' },
+            { word: 'ACQUIRE', hint: 'Obtain or get' },
+            { word: 'ACRE', hint: 'Unit of land area' },
+            { word: 'ACROBAT', hint: 'Gymnastic performer' },
+            { word: 'ACRONYM', hint: 'Word from initials' },
+            { word: 'ACROSS', hint: 'From one side to other' },
+            { word: 'ACTION', hint: 'Something done' },
+            { word: 'ACTIVATE', hint: 'Turn on or start' },
+            { word: 'ACTIVE', hint: 'Doing things' },
+            { word: 'ACTIVITY', hint: 'Engagement or pursuit' },
+            { word: 'ACTOR', hint: 'Performer in plays' },
+            { word: 'ACTUAL', hint: 'Real or true' },
+            { word: 'ADAPT', hint: 'Adjust to new conditions' },
+            { word: 'ADD', hint: 'Combine or total' },
+            { word: 'ADDRESS', hint: 'Residence or speech' },
+            { word: 'ADEQUATE', hint: 'Sufficient or satisfactory' },
+            { word: 'ADJACENT', hint: 'Next to or nearby' },
+            { word: 'ADJECTIVE', hint: 'Describing word' },
+            { word: 'ADJUST', hint: 'Change slightly' },
+            { word: 'ADMIRE', hint: 'Respect or esteem' },
+            { word: 'ADMIT', hint: 'Allow entry or confess' },
+            { word: 'ADOLESCENT', hint: 'Teenager' },
+            { word: 'ADOPT', hint: 'Take as one\'s own' },
+            { word: 'ADORE', hint: 'Love deeply' },
+            { word: 'ADORN', hint: 'Decorate' },
+            { word: 'ADULT', hint: 'Grown person' },
+            { word: 'ADVANCE', hint: 'Move forward' },
+            { word: 'ADVANTAGE', hint: 'Beneficial position' },
+            { word: 'ADVENTURE', hint: 'Exciting journey' },
+            { word: 'ADVERB', hint: 'Modifying word' },
+            { word: 'ADVERSARY', hint: 'Enemy or opponent' },
+            { word: 'ADVERSE', hint: 'Unfavorable' },
+            { word: 'ADVERTISE', hint: 'Publicize or promote' },
+            { word: 'ADVICE', hint: 'Guidance or suggestion' },
+            { word: 'ADVISE', hint: 'Give counsel' },
+            { word: 'ADVOCATE', hint: 'Supporter or promote' },
+            { word: 'AEROBIC', hint: 'Exercise with oxygen' },
+            { word: 'AESTHETIC', hint: 'Artistic or beautiful' },
+            { word: 'AFFAIR', hint: 'Event or relationship' },
+            { word: 'AFFECT', hint: 'Influence or emotion' },
+            { word: 'AFFECTION', hint: 'Fondness' },
+            { word: 'AFFIRM', hint: 'State positively' },
+            { word: 'AFFLUENT', hint: 'Wealthy or rich' },
+            { word: 'AFFORD', hint: 'Have means for' },
+            { word: 'AFRICAN', hint: 'From Africa' },
+            { word: 'AFTERMATH', hint: 'Consequence or result' },
+            { word: 'AFTERNOON', hint: 'Time after noon' },
+            { word: 'AFTERWARD', hint: 'Later in time' },
+            { word: 'AGAINST', hint: 'In opposition to' },
+            { word: 'AGENCY', hint: 'Organization or action' },
+            { word: 'AGENDA', hint: 'List of things to do' },
+            { word: 'AGENT', hint: 'Representative or force' },
+            { word: 'AGGREGATE', hint: 'Collective whole' },
+            { word: 'AGGRESSION', hint: 'Hostile attack' },
+            { word: 'AGILE', hint: 'Quick and nimble' },
+            { word: 'AGILITY', hint: 'Nimbleness' },
+            { word: 'AGITATE', hint: 'Disturb or stir' },
+            { word: 'AGNOSTIC', hint: 'Unsure about religion' },
+            { word: 'AGONY', hint: 'Severe pain' },
+            { word: 'AGRICULTURE', hint: 'Farming practices' },
+            { word: 'AIRTIGHT', hint: 'Sealed completely' },
+            { word: 'AISLE', hint: 'Passage between seats' },
+            { word: 'ALABASTER', hint: 'White stone' },
+            { word: 'ALARM', hint: 'Warning signal' },
+            { word: 'ALBUM', hint: 'Collection of songs' },
+            { word: 'ALCHEMY', hint: 'Medieval chemistry' },
+            { word: 'ALCOHOL', hint: 'Intoxicating substance' },
+            { word: 'ALERT', hint: 'Watchful or warning' },
+            { word: 'ALGEBRA', hint: 'Mathematical system' },
+            { word: 'ALIAS', hint: 'Assumed name' },
+            { word: 'ALIBI', hint: 'Excuse for whereabouts' },
+            { word: 'ALIEN', hint: 'Foreigner or extraterrestrial' },
+            { word: 'ALIENATE', hint: 'Make unfriendly' },
+            { word: 'ALIGHT', hint: 'Descend or illuminate' },
+            { word: 'ALIGN', hint: 'Arrange in line' },
+            { word: 'ALIVE', hint: 'Living or aware' },
+            { word: 'ALLEGIANCE', hint: 'Loyalty or devotion' },
+            { word: 'ALLEGORY', hint: 'Story with hidden meaning' },
+            { word: 'ALLERGY', hint: 'Adverse reaction' },
+            { word: 'ALLEY', hint: 'Narrow passage' },
+            { word: 'ALLIANCE', hint: 'Union or partnership' },
+            { word: 'ALLIGATOR', hint: 'Large reptile' },
+            { word: 'ALLOCATE', hint: 'Assign or distribute' },
+            { word: 'ALLOT', hint: 'Give a share' },
+            { word: 'ALLOW', hint: 'Permit or enable' },
+            { word: 'ALLOY', hint: 'Metal mixture' },
+            { word: 'ALLUDE', hint: 'Refer indirectly' },
+            { word: 'ALLURE', hint: 'Attraction or charm' },
+            { word: 'ALLUSION', hint: 'Indirect reference' },
+            { word: 'ALLY', hint: 'Friend or partner' },
+            { word: 'ALMANAC', hint: 'Annual calendar' },
+            { word: 'ALMIGHTY', hint: 'All powerful' },
+            { word: 'ALMOND', hint: 'Nut or tree' },
+            { word: 'ALMONER', hint: 'Charity giver' },
+            { word: 'ALMS', hint: 'Charity or donation' },
+            { word: 'ALOFT', hint: 'Above or up high' },
+            { word: 'ALONE', hint: 'By oneself' },
+            { word: 'ALONG', hint: 'Beside or together' },
+            { word: 'ALONGSIDE', hint: 'Beside or next to' },
+            { word: 'ALOOF', hint: 'Distant or uninvolved' },
+            { word: 'ALPACA', hint: 'Wool bearing animal' },
+            { word: 'ALPHABET', hint: 'Letters of a language' },
+            { word: 'ALPINE', hint: 'Mountain region' },
+            { word: 'ALREADY', hint: 'By this time' },
+            { word: 'ALTAR', hint: 'Religious table' },
+            { word: 'ALTER', hint: 'Change or modify' },
+            { word: 'ALTERATION', hint: 'Change or modification' },
+            { word: 'ALTERNATE', hint: 'Rotate or substitute' },
+            { word: 'ALTERNATIVE', hint: 'Other option' },
+            { word: 'ALTHOUGH', hint: 'Even if' },
+            { word: 'ALTITUDE', hint: 'Height above ground' },
+            { word: 'ALTOGETHER', hint: 'Completely' },
+            { word: 'ALTRUISM', hint: 'Unselfish concern' },
+            { word: 'ALUMINUM', hint: 'Lightweight metal' },
+            { word: 'ALWAYS', hint: 'Forever or constantly' },
+            { word: 'AMALGAM', hint: 'Mixture or blend' },
+            { word: 'AMALGAMATE', hint: 'Combine or merge' },
+            { word: 'AMASS', hint: 'Accumulate' },
+            { word: 'AMATEUR', hint: 'Non professional' },
+            { word: 'AMAZE', hint: 'Astonish or surprise' },
+            { word: 'AMAZEMENT', hint: 'Surprise or wonder' },
+            { word: 'AMAZON', hint: 'Strong woman' },
+            { word: 'AMBASSADOR', hint: 'Official representative' },
+            { word: 'AMBER', hint: 'Fossilized resin' },
+            { word: 'AMBIENT', hint: 'Surrounding' },
+            { word: 'AMBIGUITY', hint: 'Unclear meaning' },
+            { word: 'AMBIGUOUS', hint: 'Uncertain meaning' },
+            { word: 'AMBITION', hint: 'Strong desire' },
+            { word: 'AMBITIOUS', hint: 'Having strong goals' },
+            { word: 'AMBLE', hint: 'Walk slowly' },
+            { word: 'AMBULANCE', hint: 'Emergency vehicle' },
+            { word: 'AMBUSH', hint: 'Surprise attack' },
+            { word: 'AMELIORATE', hint: 'Improve' },
+            { word: 'AMENABLE', hint: 'Responsive or willing' },
+            { word: 'AMEND', hint: 'Change or improve' },
+            { word: 'AMENDMENT', hint: 'Change or revision' },
+            { word: 'AMENITY', hint: 'Convenience or facility' },
+            { word: 'AMIABLE', hint: 'Good natured' },
+            { word: 'AMICABLE', hint: 'Friendly or peaceful' },
+            { word: 'AMID', hint: 'In the middle of' },
+            { word: 'AMISS', hint: 'Wrong or improper' },
+            { word: 'AMITY', hint: 'Friendship' },
+            { word: 'AMMONIA', hint: 'Pungent gas' },
+            { word: 'AMMUNITION', hint: 'Bullets or shells' },
+            { word: 'AMNESIA', hint: 'Memory loss' },
+            { word: 'AMNESTY', hint: 'Forgiveness of crime' },
+            { word: 'AMOEBA', hint: 'Microscopic organism' },
+            { word: 'AMONG', hint: 'In the middle of' },
+            { word: 'AMOROUS', hint: 'Loving or romantic' },
+            { word: 'AMORPHOUS', hint: 'Without shape' },
+            { word: 'AMOUNT', hint: 'Quantity or sum' },
+            { word: 'AMPERE', hint: 'Unit of electricity' },
+            { word: 'AMPHIBIAN', hint: 'Land and water animal' },
+            { word: 'AMPHITHEATER', hint: 'Oval arena' },
+            { word: 'AMPLE', hint: 'Plentiful or spacious' },
+            { word: 'AMPLIFY', hint: 'Make louder' },
+            { word: 'AMPUTATE', hint: 'Cut off limb' },
+            { word: 'AMULET', hint: 'Good luck charm' },
+            { word: 'AMUSE', hint: 'Entertain' },
+            { word: 'AMUSEMENT', hint: 'Entertainment' },
+            { word: 'AMUSING', hint: 'Funny or entertaining' },
+            { word: 'ANACHRONISM', hint: 'Thing out of time' },
+            { word: 'ANAGRAM', hint: 'Word puzzle' },
+            { word: 'ANALOGUE', hint: 'Similar thing' },
+            { word: 'ANALOGY', hint: 'Comparison' },
+            { word: 'ANALYSE', hint: 'Examine closely' },
+            { word: 'ANALYSIS', hint: 'Detailed examination' },
+            { word: 'ANALYST', hint: 'Examiner or thinker' },
+            { word: 'ANALYTIC', hint: 'Using analysis' },
+            { word: 'ANARCHIST', hint: 'Anti government person' },
+            { word: 'ANARCHY', hint: 'Lack of government' },
+            { word: 'ANATHEMA', hint: 'Curse or curse object' },
+            { word: 'ANATOMICAL', hint: 'Relating to body' },
+            { word: 'ANATOMY', hint: 'Body structure' },
+            { word: 'ANCESTOR', hint: 'Forebear or relative' },
+            { word: 'ANCESTRAL', hint: 'Relating to forebears' },
+            { word: 'ANCESTRY', hint: 'Family lineage' },
+            { word: 'ANCHORMAN', hint: 'News broadcaster' },
+            { word: 'ANCHOVY', hint: 'Small fish' },
+            { word: 'ANCIENT', hint: 'Very old' },
+            { word: 'ANCILLARY', hint: 'Subordinate' },
+            { word: 'ANECDOTE', hint: 'Short story' },
+            { word: 'ANEMIA', hint: 'Blood deficiency' },
+            { word: 'ANEMIC', hint: 'Lacking vitality' },
+            { word: 'ANEMONE', hint: 'Sea creature or flower' },
+            { word: 'ANESTHESIA', hint: 'Loss of sensation' },
+            { word: 'ANESTHETIC', hint: 'Numbing agent' },
+            { word: 'ANGEL', hint: 'Spiritual being' },
+            { word: 'ANGELIC', hint: 'Pure and good' },
+            { word: 'ANGER', hint: 'Strong displeasure' },
+            { word: 'ANGLE', hint: 'Corner or perspective' },
+            { word: 'ANGLER', hint: 'Fishing person' },
+            { word: 'ANGLICAN', hint: 'Church of England' },
+            { word: 'ANGRY', hint: 'Full of rage' },
+            { word: 'ANGST', hint: 'Anxiety or dread' },
+            { word: 'ANGUISH', hint: 'Severe pain or suffering' },
+            { word: 'ANGULAR', hint: 'Having angles or corners' },
+            { word: 'ANIMAL', hint: 'Living creature' },
+            { word: 'ANIMATE', hint: 'Make alive or active' },
+            { word: 'ANIMATION', hint: 'Movement or liveliness' },
+            { word: 'ANIMOSITY', hint: 'Strong hostility' },
+            { word: 'ANISE', hint: 'Herb or spice' },
+            { word: 'ANKLE', hint: 'Joint above foot' },
+            { word: 'ANNALS', hint: 'Historical records' },
+            { word: 'ANNEX', hint: 'Add or attach' },
+            { word: 'ANNIHILATE', hint: 'Destroy completely' },
+            { word: 'ANNIVERSARY', hint: 'Annual celebration' },
+            { word: 'ANNOUNCE', hint: 'Make public' },
+            { word: 'ANNOY', hint: 'Irritate or bother' },
+            { word: 'ANNUAL', hint: 'Yearly occurrence' },
+            { word: 'ANNUL', hint: 'Cancel or repeal' },
+            { word: 'ANODE', hint: 'Positive electrode' },
+            { word: 'ANOINT', hint: 'Apply oil' },
+            { word: 'ANOMALOUS', hint: 'Abnormal or unusual' },
+            { word: 'ANOMALY', hint: 'Abnormality or oddity' },
+            { word: 'ANONYMITY', hint: 'Condition of being unknown' },
+            { word: 'ANONYMOUS', hint: 'Unnamed' },
+            { word: 'ANOTHER', hint: 'One more' },
+            { word: 'ANSWER', hint: 'Reply or solution' },
+            { word: 'ANSWERABLE', hint: 'Responsible' },
+            { word: 'ANTAGONISM', hint: 'Active opposition' },
+            { word: 'ANTAGONIST', hint: 'Opponent' },
+            { word: 'ANTAGONISTIC', hint: 'Opposed or hostile' },
+            { word: 'ANTAGONIZE', hint: 'Provoke hostility' },
+            { word: 'ANTARCTIC', hint: 'South polar region' },
+            { word: 'ANTE', hint: 'Poker stake' },
+            { word: 'ANTECEDENT', hint: 'Something that precedes' },
+            { word: 'ANTECHAMBER', hint: 'Waiting room' },
+            { word: 'ANTELOPE', hint: 'Horned animal' },
+            { word: 'ANTERIOR', hint: 'Front or former' },
+            { word: 'ANTEROOM', hint: 'Waiting room' },
+            { word: 'ANTHEM', hint: 'Song of praise' },
+            { word: 'ANTHOLOGY', hint: 'Collection of works' },
+            { word: 'ANTHROPOID', hint: 'Ape like' },
+            { word: 'ANTHROPOLOGY', hint: 'Study of people' },
+            { word: 'ANTIAIRCRAFT', hint: 'Against aircraft' },
+            { word: 'ANTIBIOTIC', hint: 'Bacteria fighter' },
+            { word: 'ANTIC', hint: 'Playful action' },
+            { word: 'ANTICIPATE', hint: 'Expect or foresee' },
+            { word: 'ANTICLIMACTIC', hint: 'Disappointing end' },
+        ];
+
+        // Difficulty setting
+        let currentDifficulty = 'easy';
+        let words = easyWords;
+
+        // Set difficulty function
+        function setDifficulty(difficulty) {
+            currentDifficulty = difficulty;
+            words = difficulty === 'easy' ? easyWords : hardWords;
+            
+            // Update button styles
+            document.getElementById('easyBtn').classList.toggle('active', difficulty === 'easy');
+            document.getElementById('hardBtn').classList.toggle('active', difficulty === 'hard');
+            
+            // Start new game with new difficulty
+            resetGame();
+        }
+
+        const bodyParts = ['head', 'body', 'leftarm', 'rightarm', 'leftleg', 'rightleg'];
+
+        let selectedWord = '';
+        let selectedHint = '';
+        let guessedLetters = [];
+        let wrongGuesses = [];
+        let gameOver = false;
+        let gameWon = false;
+        let hintUsed = false;
+
+        function initGame() {
+            const wordObj = words[Math.floor(Math.random() * words.length)];
+            selectedWord = wordObj.word;
+            selectedHint = wordObj.hint;
+            guessedLetters = [];
+            wrongGuesses = [];
+            gameOver = false;
+            gameWon = false;
+            hintUsed = false;
+            
+            // Reset hint button
+            const hintBtn = document.getElementById('hintBtn');
+            if (hintBtn) {
+                hintBtn.disabled = false;
+                hintBtn.textContent = '💡 Get Hint';
+            }
+            
+            renderGame();
+            createAlphabet();
+        }
+
+        function createAlphabet() {
+            const alphabetDiv = document.getElementById('alphabet');
+            if (!alphabetDiv) return; // Safety check
+            
+            alphabetDiv.innerHTML = '';
+            
+            for (let i = 65; i <= 90; i++) {
+                const letter = String.fromCharCode(i);
+                const btn = document.createElement('button');
+                btn.textContent = letter;
+                btn.className = 'letter-btn';
+                btn.id = `btn-${letter}`;
+                btn.onclick = () => guessLetter(letter, btn);
+                alphabetDiv.appendChild(btn);
+            }
+        }
+
+        // Add keyboard support for physical keyboard
+        document.addEventListener('keydown', (e) => {
+            if (gameOver) return;
+            const letter = e.key.toUpperCase();
+            if (/^[A-Z]$/.test(letter)) {
+                const btn = document.getElementById(`btn-${letter}`);
+                if (btn && !btn.disabled) {
+                    btn.click();
+                }
+            }
+        });
+
+        function guessLetter(letter, btn) {
+            if (guessedLetters.includes(letter) || wrongGuesses.includes(letter) || gameOver) return;
+
+            btn.disabled = true;
+
+            if (selectedWord.includes(letter)) {
+                guessedLetters.push(letter);
+            } else {
+                wrongGuesses.push(letter);
+                showBodyPart();
+            }
+
+            renderGame();
+            checkGameStatus();
+        }
+
+        function showBodyPart() {
+            if (wrongGuesses.length <= bodyParts.length) {
+                const part = bodyParts[wrongGuesses.length - 1];
+                const element = document.getElementById(part);
+                if (element) {
+                    element.style.display = 'block';
+                }
+                
+                // Show facial features with head
+                if (part === 'head') {
+                    const eyeLeft = document.getElementById('eyeLeft');
+                    const eyeRight = document.getElementById('eyeRight');
+                    const mouth = document.getElementById('mouth');
+                    
+                    if (eyeLeft) eyeLeft.style.display = 'block';
+                    if (eyeRight) eyeRight.style.display = 'block';
+                    if (mouth) mouth.style.display = 'block';
+                }
+            }
+        }
+
+        function renderGame() {
+            // Update word display
+            let displayWord = '';
+            for (let letter of selectedWord) {
+                if (guessedLetters.includes(letter)) {
+                    displayWord += letter + ' ';
+                } else {
+                    displayWord += '_ ';
+                }
+            }
+            const wordDisplay = document.getElementById('wordDisplay');
+            if (wordDisplay) {
+                wordDisplay.textContent = displayWord;
+            }
+
+            // Update stats
+            const triesRemaining = document.getElementById('triesRemaining');
+            const wrongCount = document.getElementById('wrongCount');
+            
+            if (triesRemaining) {
+                triesRemaining.textContent = 6 - wrongGuesses.length;
+            }
+            if (wrongCount) {
+                wrongCount.textContent = wrongGuesses.length;
+            }
+        }
+
+        function showHint() {
+            if (!hintUsed && !gameOver) {
+                hintUsed = true;
+                const hintBtn = document.getElementById('hintBtn');
+                
+                if (hintBtn) {
+                    hintBtn.textContent = '💡 ' + selectedHint;
+                    hintBtn.disabled = true;
+                }
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#FFD93D', '#FF6B6B', '#4D96FF', '#6BCB77', '#FF8C42'];
+            const confettiCount = 50;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 8 + 5) + 'px';
+                confetti.style.height = (Math.random() * 8 + 5) + 'px';
+                confetti.style.borderRadius = Math.random() * 50 + '%';
+                confetti.style.opacity = Math.random() * 0.8 + 0.2;
+                
+                // Random animation delay
+                const delay = Math.random() * 0.5;
+                confetti.style.animationDelay = delay + 's';
+                
+                // Random rotation
+                const rotate = Math.random() * 360;
+                confetti.style.transform = `rotateZ(${rotate}deg)`;
+                
+                document.body.appendChild(confetti);
+                
+                // Remove confetti element after animation completes
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3500 + delay * 1000);
+            }
+        }
+
+        function checkGameStatus() {
+            // Check if won
+            let won = true;
+            for (let letter of selectedWord) {
+                if (!guessedLetters.includes(letter)) {
+                    won = false;
+                    break;
+                }
+            }
+
+            if (won) {
+                gameWon = true;
+                gameOver = true;
+                showModal('You Won! Congratulations! 🎉', 'win');
+                createConfetti();
+                disableAllButtons();
+                return;
+            }
+
+            // Check if lost
+            if (wrongGuesses.length >= 6) {
+                gameOver = true;
+                showModal(`Game Over! The word was: ${selectedWord}`, 'lose');
+                disableAllButtons();
+            }
+        }
+
+        function showModal(message, type) {
+            const modal = document.getElementById('messageModal');
+            const modalMessage = document.getElementById('modalMessage');
+            
+            modalMessage.textContent = message;
+            modalMessage.className = `modal-message ${type}`;
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('messageModal');
+            modal.classList.remove('show');
+            newGame();
+        }
+
+        function disableAllButtons() {
+            const buttons = document.querySelectorAll('.letter-btn');
+            buttons.forEach(btn => btn.disabled = true);
+        }
+
+        function resetGame() {
+            // Hide all main body parts
+            bodyParts.forEach(part => {
+                const element = document.getElementById(part);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+            
+            // Hide facial features
+            const faceParts = ['eyeLeft', 'eyeRight', 'mouth'];
+            faceParts.forEach(part => {
+                const element = document.getElementById(part);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+            
+            // Close modal if open
+            const modal = document.getElementById('messageModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+            
+            initGame();
+        }
+
+        function newGame() {
+            resetGame();
+        }
+
+        // Start the game when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                resetGame();
+            });
+        } else {
+            resetGame();
+        }
+    </script>
+</body>
+</html>
