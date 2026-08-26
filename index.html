@@ -8,7 +8,9 @@
 <meta property="og:title" content="Hangman4Kids">
 <meta property="og:description" content="A free daily hangman word game for kids, with a new theme every day.">
 <meta property="og:type" content="website">
-<link rel="icon" type="image/png" href="hangman-smiley-300x300.png">
+<link rel="icon" type="image/png" sizes="32x32" href="hangman-smiley-32x32.png">
+<link rel="icon" type="image/png" sizes="300x300" href="hangman-smiley-300x300.png">
+<link rel="apple-touch-icon" href="hangman-smiley-300x300.png">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9803048859843521" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="./support.js"></script>
@@ -48,7 +50,7 @@
         <div style="font-size: 0.75em; color: #FF8C42; font-weight: bold; text-align: center; font-family: sans-serif;">Shop on Amazon →</div>
       </a>
 
-      <a href="https://amzn.to/4gmxN2E" target="_blank" rel="noopener noreferrer sponsored" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 200px; background: #fff; border-radius: 20px; padding: 12px; border: 3px solid #FFD93D; box-shadow: 0 8px 24px rgba(0,0,0,0.15); text-decoration: none; box-sizing: border-box;">
+      <a href="https://www.amazon.com/dp/B008RU8GC4?th=1&amp;linkCode=ll2&amp;tag=hfk2026-20&amp;linkId=723485ed81378e6e82e1f3eb39b582c3&amp;language=en_US&amp;gaOptInStatus=false&amp;optOutTS=1787037225106&amp;ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer sponsored" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 200px; background: #fff; border-radius: 20px; padding: 12px; border: 3px solid #FFD93D; box-shadow: 0 8px 24px rgba(0,0,0,0.15); text-decoration: none; box-sizing: border-box;">
         <img src="zingo-sight-words-ad.png" alt="Zingo Sight Words game" style="width: 100%; border-radius: 12px; display: block;">
         <div style="font-size: 0.85em; font-weight: bold; color: #333; text-align: center; font-family: sans-serif;">Zingo! Sight Words</div>
         <div style="font-size: 0.75em; color: #FF8C42; font-weight: bold; text-align: center; font-family: sans-serif;">Shop on Amazon →</div>
@@ -87,7 +89,7 @@
             </div>
           </div>
 
-          <div style="{{ yellowBoxStyle }}">
+          <div id="hangman-yellow-box" style="{{ yellowBoxStyle }}">
             <div style="text-align: center; font-weight: bold; color: #FF8C42; font-size: 0.9em; margin-bottom: 8px;">Click Letters or Use Your Keyboard</div>
             <div style="{{ letterGridStyle }}">
               <sc-for list="{{ alphabet }}" as="l" hint-placeholder-count="26">
@@ -129,13 +131,13 @@
         <div style="font-size: 0.75em; color: #FF8C42; font-weight: bold; text-align: center; font-family: sans-serif;">Shop on Amazon →</div>
       </a>
 
-      <a href="https://amzn.to/3UyqH3I" target="_blank" rel="noopener noreferrer sponsored" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 200px; background: #fff; border-radius: 20px; padding: 12px; border: 3px solid #FFD93D; box-shadow: 0 8px 24px rgba(0,0,0,0.15); text-decoration: none; box-sizing: border-box;">
+      <a href="https://amzn.to/4zg74NM" target="_blank" rel="noopener noreferrer sponsored" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 200px; background: #fff; border-radius: 20px; padding: 12px; border: 3px solid #FFD93D; box-shadow: 0 8px 24px rgba(0,0,0,0.15); text-decoration: none; box-sizing: border-box;">
         <img src="word-family-flashcards-ad.png" alt="Word Family Build Book flashcards" style="width: 100%; border-radius: 12px; display: block;">
         <div style="font-size: 0.85em; font-weight: bold; color: #333; text-align: center; font-family: sans-serif;">Word Family Build Book Flashcards</div>
         <div style="font-size: 0.75em; color: #FF8C42; font-weight: bold; text-align: center; font-family: sans-serif;">Shop on Amazon →</div>
       </a>
 
-      <a href="https://amzn.to/4hKfXJf" target="_blank" rel="noopener noreferrer sponsored" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 200px; background: #fff; border-radius: 20px; padding: 12px; border: 3px solid #FFD93D; box-shadow: 0 8px 24px rgba(0,0,0,0.15); text-decoration: none; box-sizing: border-box;">
+      <a href="https://www.amazon.com/Double-Bananagrams-Game-Set-tiles/dp/B001THPVA2?crid=25NZQXMEYAF4E&amp;dib=eyJ2IjoiMSJ9.sv9_HcKVFoY_rgvQHl0cHdV7GTrAmDkSN1bswgdE0fa5cEdxxdPGkjkql7ciZihpAg94N5YdHZCwfxwmHH5-Zg6-qkqgU15yOlKueKTAQbHff1o9Tn7eYPDiqad2lAOj3WhVY0Neqs5-9mM9D_s5BSNDdGJrRdcbiU4nt17RnhnkI54bm8En6FEdTgGv_CSTKXgmneT-LzNfNyVCKwpo7LDQh8oFLQIgm3qPAuNs5jrhEJdxA9_kk1RApOK5o8TAFJXhGdsNgpabJr5uWscgfi5XF-8HYck0eLUJ9_I317I.mkLZLOIBMnPObE8cFJJofYSpRgm4TP07v5sf5awEocU&amp;dib_tag=se&amp;keywords=bananagrams&amp;qid=1786976818&amp;sprefix=Bananagrams%2Caps%2C258&amp;sr=8-2&amp;th=1&amp;linkCode=ll2&amp;tag=hfk2026-20&amp;linkId=370dc6e67bbf5a864e8242a5a17ea5fa&amp;language=en_US&amp;gaOptInStatus=true&amp;ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer sponsored" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 200px; background: #fff; border-radius: 20px; padding: 12px; border: 3px solid #FFD93D; box-shadow: 0 8px 24px rgba(0,0,0,0.15); text-decoration: none; box-sizing: border-box;">
         <img src="double-bananagrams-ad.png" alt="Double Bananagrams game" style="width: 100%; border-radius: 12px; display: block;">
         <div style="font-size: 0.85em; font-weight: bold; color: #333; text-align: center; font-family: sans-serif;">Double Bananagrams</div>
         <div style="font-size: 0.75em; color: #FF8C42; font-weight: bold; text-align: center; font-family: sans-serif;">Shop on Amazon →</div>
@@ -184,19 +186,24 @@
   </sc-if>
 
   <sc-if value="{{ shareModalOpen }}" hint-placeholder-val="{{ false }}">
-    <div style="position: fixed; z-index: 10001; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease;">
-      <div style="background: linear-gradient(135deg, #FFFACD, #FFE4B5); border: 7px solid #FFD700; border-radius: 32px; padding: 28px; text-align: center; max-width: 380px; width: 90%; box-shadow: 0 10px 50px rgba(0,0,0,0.3); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);">
-        <div style="font-size: 1.6em; font-weight: bold; color: #6BCB77; margin-bottom: 6px; font-family: 'Comic Sans MS', cursive;">2 words down! 🎉</div>
-        <div style="font-size: 1em; color: #333; margin-bottom: 14px;">Share your progress with friends!</div>
+    <div style="position: fixed; z-index: 10001; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; padding: 20px; box-sizing: border-box; overflow-y: auto;">
+      <div style="background: linear-gradient(135deg, #FFFACD, #FFE4B5); border: 7px solid #FFD700; border-radius: 32px; padding: 28px; text-align: center; max-width: 380px; width: 100%; max-height: 90vh; overflow-y: auto; box-sizing: border-box; box-shadow: 0 10px 50px rgba(0,0,0,0.3); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);">
+        <div style="font-size: 1.7em; font-weight: bold; color: #6BCB77; margin-bottom: 2px; font-family: 'Fredoka', 'Comic Sans MS', cursive;">{{ shareHeadline }}</div>
+        <div style="font-size: 1.05em; font-weight: bold; color: #FF6B1A; margin-bottom: 10px;">{{ themeIcon }} {{ shareWord }} — today's {{ themeName }} word</div>
+        <div style="font-size: 1em; color: #333; margin-bottom: 14px; line-height: 1.45;">{{ shareSubline }}</div>
         <div style="background: white; border-radius: 20px; border: 3px solid #FF6B9D; padding: 10px; margin-bottom: 16px;">
-          <img id="share-win-img" src="hangman-figure-32x32.png" style="width: 100%; display: block; border-radius: 12px;">
-          <div style="font-size: 0.8em; color: #999; margin-top: 6px;">Your last attempt · {{ shareWrongCount }}/6 wrong guesses</div>
+          <img id="share-win-img" src="hangman-figure-32x32.png" style="max-width: 100%; max-height: 34vh; width: auto; margin: 0 auto; object-fit: contain; display: block; border-radius: 12px;">
+          <div style="font-size: 0.8em; color: #999; margin-top: 6px;">{{ themeName }} · only {{ shareWrongCount }}/6 wrong guesses</div>
         </div>
+        <div style="font-size: 0.8em; font-weight: bold; color: #777; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px;">Send it to them</div>
         <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 14px; flex-wrap: wrap;">
           <button onClick="{{ shareTwitter }}" style="background: #1DA1F2; color: white; border: none; padding: 10px 16px; border-radius: 14px; font-weight: bold; cursor: pointer; font-family: inherit; box-shadow: 0 4px 10px rgba(29,161,242,0.35);">Twitter/X</button>
           <button onClick="{{ shareFacebook }}" style="background: #1877F2; color: white; border: none; padding: 10px 16px; border-radius: 14px; font-weight: bold; cursor: pointer; font-family: inherit; box-shadow: 0 4px 10px rgba(24,119,242,0.35);">Facebook</button>
           <button onClick="{{ shareWhatsapp }}" style="background: #25D366; color: white; border: none; padding: 10px 16px; border-radius: 14px; font-weight: bold; cursor: pointer; font-family: inherit; box-shadow: 0 4px 10px rgba(37,211,102,0.35);">WhatsApp</button>
         </div>
+        <sc-if value="{{ shareHandoffShown }}" hint-placeholder-val="{{ false }}">
+          <div style="background: #E8F5E9; border: 2px solid #6BCB77; color: #2f6b3a; border-radius: 14px; padding: 8px 12px; font-size: 0.85em; font-weight: bold; margin-bottom: 12px;">{{ shareHandoffNote }}</div>
+        </sc-if>
         <button onClick="{{ closeShareModal }}" style="background: linear-gradient(135deg, #4D96FF 0%, #7BB8FF 100%); color: white; border: none; padding: 12px 30px; font-size: 1em; font-weight: bold; border-radius: 18px; cursor: pointer; font-family: inherit; box-shadow: 0 6px 18px rgba(77,150,255,0.3);">Keep Playing</button>
       </div>
     </div>
@@ -207,7 +214,11 @@
   </sc-for>
 
   <div style="text-align: center; color: rgba(255,255,255,0.85); font-size: 12px; font-family: sans-serif;">
-    <a href="#" onClick="{{ openPrivacy }}" style="color: #fff; text-decoration: underline;">Privacy Policy</a>
+    <div style="display: flex; gap: 14px; justify-content: center; align-items: center;">
+      <a href="#" onClick="{{ openPrivacy }}" style="color: #fff; text-decoration: underline;">Privacy Policy</a>
+      <a href="#" onClick="{{ openAbout }}" style="color: #fff; text-decoration: underline;">About Us</a>
+      <a href="#" onClick="{{ openContact }}" style="color: #fff; text-decoration: underline;">Contact</a>
+    </div>
     <div style="margin-top: 4px;">© {{ currentYear }} Hangman4Kids.com. All rights reserved.</div>
   </div>
 
@@ -225,6 +236,37 @@
           <p><strong>Contact</strong><br>Questions about this policy can be sent to the site owner via the contact information provided on this site.</p>
         </div>
         <button onClick="{{ closePrivacy }}" style="background: linear-gradient(135deg, #4D96FF 0%, #7BB8FF 100%); color: white; border: none; padding: 12px 30px; font-size: 1em; font-weight: bold; border-radius: 18px; cursor: pointer; font-family: inherit; box-shadow: 0 6px 18px rgba(77,150,255,0.3); margin-top: 18px;">Close</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ aboutModalOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; z-index: 10002; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; padding: 20px; box-sizing: border-box; overflow-y: auto;">
+      <div style="background: #fff; border: 5px solid #6BCB77; border-radius: 24px; padding: 28px; text-align: left; max-width: 560px; width: 100%; max-height: 85vh; overflow-y: auto; box-sizing: border-box; box-shadow: 0 10px 50px rgba(0,0,0,0.3); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); font-family: sans-serif;">
+        <div style="font-size: 1.4em; font-weight: bold; color: #FF6B6B; margin-bottom: 16px; font-family: 'Fredoka', 'Comic Sans MS', cursive;">About Us</div>
+        <div style="font-size: 0.95em; color: #333; line-height: 1.6;">
+          <p>Hangman4Kids.com is a free word game built for kids who are learning to spell and read. There is nothing to install and nothing to sign up for: open the page and play.</p>
+          <p><strong>A new theme every day</strong><br>The game rotates through 30 themes — animals, food, space, sports, holidays and more. Each theme carries hundreds of words, so today's puzzle is never yesterday's puzzle.</p>
+          <p><strong>Easy and Hard</strong><br>Easy words suit early readers. Hard words stretch older kids with longer spellings and richer vocabulary. Every word comes with a hint, so a stuck player always has a way forward.</p>
+          <p><strong>Made for families</strong><br>Progress is counted for the day and resets the next morning, so there's no pressure to keep a streak alive. Wins can be shared with a parent or a friend straight from the game.</p>
+          <p><strong>How the site is funded</strong><br>Hangman4Kids is free to play and paid for by ads and Amazon affiliate links to word games and learning toys. If you buy through one of those links, we may earn a small commission at no extra cost to you.</p>
+          <p><strong>Get in touch</strong><br>Suggestions for new themes or words are welcome — reach the site owner using the contact information on this site.</p>
+        </div>
+        <button onClick="{{ closeAbout }}" style="background: linear-gradient(135deg, #6BCB77 0%, #8FDC98 100%); color: white; border: none; padding: 12px 30px; font-size: 1em; font-weight: bold; border-radius: 18px; cursor: pointer; font-family: inherit; box-shadow: 0 6px 18px rgba(107,203,119,0.35); margin-top: 18px;">Close</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ contactModalOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; z-index: 10002; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; padding: 20px; box-sizing: border-box; overflow-y: auto;">
+      <div style="background: #fff; border: 5px solid #FF8C42; border-radius: 24px; padding: 28px; text-align: left; max-width: 480px; width: 100%; max-height: 85vh; overflow-y: auto; box-sizing: border-box; box-shadow: 0 10px 50px rgba(0,0,0,0.3); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); font-family: sans-serif;">
+        <div style="font-size: 1.4em; font-weight: bold; color: #FF6B6B; margin-bottom: 12px; font-family: 'Fredoka', 'Comic Sans MS', cursive;">Contact Us</div>
+        <div style="font-size: 0.95em; color: #333; line-height: 1.6;">
+          <p>Questions, bug reports, or ideas for new themes and words? Fill in our short contact form and we'll read every one.</p>
+          <p>Please don't include personal details.</p>
+        </div>
+        <a href="https://forms.gle/NRoAHETykGgDyhQB7" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: linear-gradient(135deg, #FF8C42 0%, #FFA96B 100%); color: white; text-decoration: none; padding: 14px 24px; font-size: 1.05em; font-weight: bold; border-radius: 18px; box-shadow: 0 6px 18px rgba(255,140,66,0.35); margin: 18px 0 10px;">Open the contact form →</a>
+        <button onClick="{{ closeContact }}" style="background: linear-gradient(135deg, #4D96FF 0%, #7BB8FF 100%); color: white; border: none; padding: 12px 30px; font-size: 1em; font-weight: bold; border-radius: 18px; cursor: pointer; font-family: inherit; box-shadow: 0 6px 18px rgba(77,150,255,0.3); margin-top: 16px;">Close</button>
       </div>
     </div>
   </sc-if>
@@ -333,15 +375,36 @@ class Component extends DCLogic {
     gameOver: false, gameWon: false, hintUsed: false,
     modalOpen: false, modalMessage: '', modalWon: false,
     shareModalOpen: false, lastAttemptWrong: 0, lastAttemptWord: '',
-    privacyModalOpen: false,
+    privacyModalOpen: false, aboutModalOpen: false, contactModalOpen: false,
     shareImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7',
     confetti: [],
-    sessionCorrect: typeof window !== 'undefined' ? parseInt(localStorage.getItem('h4k_correct') || '0', 10) : 0,
-    sessionWrong: typeof window !== 'undefined' ? parseInt(localStorage.getItem('h4k_wrong') || '0', 10) : 0,
+    sessionCorrect: Component._todayScore().correct,
+    sessionWrong: Component._todayScore().wrong,
     shakeWord: false,
     vw: typeof window !== 'undefined' ? window.innerWidth : 1280,
     vh: typeof window !== 'undefined' ? window.innerHeight : 800,
   };
+
+  static _dayKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  // Progress is per-day: a stored date other than today's reads back as 0/0.
+  static _todayScore() {
+    if (typeof window === 'undefined') return { correct: 0, wrong: 0 };
+    if (localStorage.getItem('h4k_date') !== Component._dayKey()) return { correct: 0, wrong: 0 };
+    return {
+      correct: parseInt(localStorage.getItem('h4k_correct') || '0', 10),
+      wrong: parseInt(localStorage.getItem('h4k_wrong') || '0', 10),
+    };
+  }
+
+  _saveScore(correct, wrong) {
+    localStorage.setItem('h4k_date', Component._dayKey());
+    localStorage.setItem('h4k_correct', correct);
+    localStorage.setItem('h4k_wrong', wrong);
+  }
 
   componentDidMount() {
     import('./themes-data.js').then((mod) => {
@@ -366,6 +429,8 @@ class Component extends DCLogic {
       if (title) this.setState({ adTopOffset: title.getBoundingClientRect().height + 14 });
       const root = document.getElementById('hangman-app-root');
       if (root) this.setState({ containerWidth: root.getBoundingClientRect().width });
+      const yb = document.getElementById('hangman-yellow-box');
+      if (yb) this.setState({ yellowBoxHeight: yb.getBoundingClientRect().height });
     };
     this._ro = new ResizeObserver(this._measureRedBox);
     requestAnimationFrame(() => {
@@ -379,6 +444,8 @@ class Component extends DCLogic {
       if (area) this._ro.observe(area);
       if (title) this._ro.observe(title);
       if (root) this._ro.observe(root);
+      const yb = document.getElementById('hangman-yellow-box');
+      if (yb) this._ro.observe(yb);
       this._measureRedBox();
     });
   }
@@ -445,7 +512,7 @@ class Component extends DCLogic {
         setTimeout(() => this._beep(1175, 0.3), 150);
         this.setState(s => {
           const sessionCorrect = s.sessionCorrect + 1;
-          localStorage.setItem('h4k_correct', sessionCorrect);
+          this._saveScore(sessionCorrect, s.sessionWrong);
           return { gameWon: true, gameOver: true, confetti: this._makeConfetti(), sessionCorrect };
         }, () => {
           if (this.state.sessionCorrect > 0 && this.state.sessionCorrect % 2 === 0) {
@@ -470,7 +537,7 @@ class Component extends DCLogic {
         this._beep(140, 0.4);
         this.setState(s => {
           const sessionWrong = s.sessionWrong + 1;
-          localStorage.setItem('h4k_wrong', sessionWrong);
+          this._saveScore(s.sessionCorrect, sessionWrong);
           return { gameOver: true, modalOpen: true, modalMessage: `The word was: ${selectedWord}`, modalWon: false, sessionWrong };
         });
       }
@@ -490,15 +557,28 @@ class Component extends DCLogic {
   }
 
   async _shareTo(platform, text, fallbackUrl) {
+    let blob = null;
     try {
-      const res = await fetch(this.state.shareImage);
-      const blob = await res.blob();
+      blob = await (await fetch(this.state.shareImage)).blob();
       const file = new File([blob], 'hangman4kids-win.png', { type: 'image/png' });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({ files: [file], title: 'Hangman4Kids', text, url: location.href });
         return;
       }
     } catch (e) {}
+    // Web intents can't carry an attachment, so hand the PNG over first:
+    // clipboard when allowed, otherwise a download.
+    let handed = false;
+    if (blob) {
+      try {
+        if (navigator.clipboard && window.ClipboardItem) {
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          handed = 'clipboard';
+        }
+      } catch (e) {}
+      if (!handed) { this._downloadShareImage(); handed = 'download'; }
+      this.setState({ shareHandoff: handed });
+    }
     this._openShareUrl(fallbackUrl);
   }
 
@@ -534,6 +614,21 @@ class Component extends DCLogic {
     const gameMaxWidth = Math.round(Math.min(1000, Math.max(320, vw - sidebarsWidth - 60)));
     const mainMaxWidth = Math.round(vw - 20);
 
+    // Shrink the letter keys to fit the yellow box instead of overflowing.
+    const gridRows = Math.ceil(26 / (isMobile ? 7 : 9));
+    const gridAvail = (this.state.yellowBoxHeight || 0) - 30 /* label */ - 24 /* padding */;
+    const rawKey = gridAvail > 0 ? Math.floor((gridAvail - 6 * (gridRows - 1)) / gridRows) : 44;
+    const keySize = Math.max(24, Math.min(48, rawKey));
+    const keyFit = {
+      height: keySize + 'px', minHeight: keySize + 'px', padding: '0px', lineHeight: 1,
+      fontSize: Math.max(10, Math.min(18, Math.round(keySize * 0.44))) + 'px',
+      borderRadius: Math.max(6, Math.round(keySize * 0.28)) + 'px',
+      borderWidth: keySize < 30 ? '1px' : '2px',
+    };
+    const letterBase = { ...LETTER_STYLE_BASE, ...keyFit };
+    const letterCorrect = { ...LETTER_STYLE_CORRECT, ...keyFit };
+    const letterWrong = { ...LETTER_STYLE_WRONG, ...keyFit };
+
     const alphabet = Array.from({ length: 26 }, (_, i) => {
       const letter = String.fromCharCode(65 + i);
       const isCorrect = guessedLetters.includes(letter);
@@ -542,7 +637,7 @@ class Component extends DCLogic {
       return {
         letter, disabled,
         onClick: () => this._guess(letter),
-        style: isCorrect ? LETTER_STYLE_CORRECT : isWrong ? LETTER_STYLE_WRONG : (gameOver ? { ...LETTER_STYLE_BASE, opacity: 0.4, cursor: 'not-allowed' } : LETTER_STYLE_BASE),
+        style: isCorrect ? letterCorrect : isWrong ? letterWrong : (gameOver ? { ...letterBase, opacity: 0.4, cursor: 'not-allowed' } : letterBase),
       };
     });
 
@@ -551,6 +646,8 @@ class Component extends DCLogic {
     const btnHardBase = { flex: 1, padding: '10px 16px', fontSize: '1em', fontWeight: 'bold', border: 'none', borderRadius: '13px', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 3px 10px rgba(0,0,0,0.15)', background: 'linear-gradient(135deg, #FF6B6B 0%, #FF8383 100%)', color: 'white' };
 
     const partStyle = (n) => (wrongCount >= n ? { display: 'block' } : { display: 'none' });
+
+    const shareMsg = `I solved ${lastAttemptWord} in today's ${selectedCategory} theme on Hangman4Kids — ${sessionCorrect} ${sessionCorrect === 1 ? 'word' : 'words'} so far today. Can you beat me?`;
 
     return {
       wordDisplayText,
@@ -587,7 +684,7 @@ class Component extends DCLogic {
       modalOpen, modalMessage,
       modalMessageStyle: {
         fontSize: '2.2em', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.5px',
-        fontFamily: "'Comic Sans MS', cursive", color: modalWon ? '#6BCB77' : '#FF6B6B',
+        fontFamily: "'Fredoka', 'Comic Sans MS', cursive", color: modalWon ? '#6BCB77' : '#FF6B6B',
         animation: modalWon ? 'bounce 0.6s ease' : 'none',
       },
       closeModal: () => { this.setState({ modalOpen: false }); this._start(); },
@@ -595,14 +692,28 @@ class Component extends DCLogic {
       privacyModalOpen: this.state.privacyModalOpen,
       openPrivacy: (e) => { if (e) e.preventDefault(); this.setState({ privacyModalOpen: true }); },
       closePrivacy: () => this.setState({ privacyModalOpen: false }),
+      aboutModalOpen: this.state.aboutModalOpen,
+      openAbout: (e) => { if (e) e.preventDefault(); this.setState({ aboutModalOpen: true }); },
+      closeAbout: () => this.setState({ aboutModalOpen: false }),
+      contactModalOpen: this.state.contactModalOpen,
+      openContact: (e) => { if (e) e.preventDefault(); this.setState({ contactModalOpen: true }); },
+      closeContact: () => this.setState({ contactModalOpen: false }),
       shareModalOpen,
       shareWord: lastAttemptWord,
       shareWrongCount: lastAttemptWrong,
       shareImage: this.state.shareImage,
-      closeShareModal: () => { this.setState({ shareModalOpen: false }); this._start(); },
-      shareTwitter: () => this._shareTo('twitter', 'I just won Hangman4Kids! 🎉 Can you beat my word: ' + lastAttemptWord + '?', `https://twitter.com/intent/tweet?text=${encodeURIComponent('I just won Hangman4Kids! 🎉 Can you beat my word: ' + lastAttemptWord + '?')}&url=${encodeURIComponent(location.href)}`),
-      shareFacebook: () => this._shareTo('facebook', 'I just won Hangman4Kids! 🎉', `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`),
-      shareWhatsapp: () => this._shareTo('whatsapp', 'I just won Hangman4Kids! 🎉 Play here: ' + location.href, `https://wa.me/?text=${encodeURIComponent('I just won Hangman4Kids! 🎉 Play here: ' + location.href)}`),
+      shareHandoffNote: this.state.shareHandoff === 'clipboard'
+        ? 'Picture copied! Paste it into your post 📋'
+        : this.state.shareHandoff === 'download'
+          ? 'Picture saved to your downloads — attach it to your post 📎'
+          : '',
+      shareHandoffShown: !!this.state.shareHandoff,
+      shareHeadline: sessionCorrect + (sessionCorrect === 1 ? ' word solved today! 🎉' : ' words solved today! 🎉'),
+      shareSubline: 'Show Mum, Dad or a friend your ' + selectedCategory + ' win — then dare them to beat ' + sessionCorrect + (sessionCorrect === 1 ? ' word.' : ' words.'),
+      closeShareModal: () => { this.setState({ shareModalOpen: false, shareHandoff: null }); this._start(); },
+      shareTwitter: () => this._shareTo('twitter', shareMsg, `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMsg)}&url=${encodeURIComponent(location.href)}`),
+      shareFacebook: () => this._shareTo('facebook', shareMsg, `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`),
+      shareWhatsapp: () => this._shareTo('whatsapp', shareMsg + ' Play here: ' + location.href, `https://wa.me/?text=${encodeURIComponent(shareMsg + ' Play here: ' + location.href)}`),
       confetti,
       themeIcon: this.state.themeIconState || '📖',
       themeName: selectedCategory,
@@ -635,11 +746,13 @@ class Component extends DCLogic {
         background: 'white', padding: '12px', borderRadius: '20px', border: '3px solid #FFD93D',
         boxShadow: '0 4px 14px rgba(255,217,61,0.15)', flex: isMobile ? '0 0 auto' : 1,
         minHeight: '110px', maxHeight: 'none',
-        display: 'flex', flexDirection: 'column', alignSelf: 'stretch',
+        display: 'flex', flexDirection: 'column', alignSelf: 'stretch', overflow: 'hidden',
       },
       letterGridStyle: {
         display: 'grid', gridTemplateColumns: isMobile ? 'repeat(7, 1fr)' : 'repeat(9, 1fr)',
-        gap: '6px', flex: 1, alignContent: 'center', overflow: 'visible',
+        gap: '6px', flex: 1, alignContent: 'center',
+        minHeight: 0, overflowY: 'auto', overflowX: 'hidden',
+        WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain', paddingRight: '2px',
       },
       adMaxHeight: this.state.adMaxHeight || 500,
       adTopOffset: this.state.adTopOffset || 0,
