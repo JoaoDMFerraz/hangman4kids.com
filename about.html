@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: linear-gradient(160deg, #FFF7E6 0%, #FFE9D6 100%); }
+    a { color: #C2453B; text-decoration: none; font-weight: 600; }
+    a:hover { color: #99342C; text-decoration: underline; }
+  </style>
+</helmet>
+
+<div style="font-family: 'Fredoka', system-ui, sans-serif; color: #33302C; line-height: 1.65;">
+  <nav style="display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; justify-content: center; padding: 14px 18px; background: #fff; border-bottom: 4px solid #FFD93D;">
+    <a href="index.html" style="font-size: 1.15em; font-weight: 700; color: #FF6B6B; margin-right: 10px; text-decoration: none;" style-hover="text-decoration: none; color: #FF6B6B;"><img src="hangman-smiley-300x300.png" alt="" style="width: 26px; height: 26px; border-radius: 50%; vertical-align: middle; margin-right: 6px;">Hangman4Kids</a>
+    <a href="index.html">Play</a>
+    <a href="how-to-play.html">How to Play</a>
+    <a href="word-games-and-reading.html">Word Games &amp; Reading</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main style="max-width: 780px; margin: 0 auto; padding: 28px 18px 48px; box-sizing: border-box; font-size: 1.06em;">
+    <h1 style="font-size: 2.1em; color: #FF6B6B; margin: 0 0 12px;">About Hangman4Kids</h1>
+    <p>Hangman4Kids is a free word game for children who are still building their vocabulary. It was made for families and classrooms that want a short daily word activity without accounts, purchases or anything to install.</p>
+
+    <h2 style="font-size: 1.4em; color: #4D96FF; margin: 26px 0 8px;">What the game is</h2>
+    <p>A round of hangman with a hint. The game shows a clue and gives six wrong guesses. Words come from themed lists covering animals, ocean life, space, food, sports, feelings, jobs, weather and more. Each theme has an easy list, aimed at roughly ages 5 to 8, and a harder list for ages 9 and up. There is one theme per day, so if you mastered today's theme come back again tomorrow.</p>
+    <p>Words are dealt in order through each theme rather than at random, so a theme is worked through completely before anything repeats, and progress is remembered between visits. Multi-word answers show their spaces from the start, so <strong>SEA TURTLE</strong> appears as two groups of blanks. Children read the shape of the phrase and get a real foothold rather than staring at one big word.</p>
+
+    <h2 style="font-size: 1.4em; color: #4D96FF; margin: 26px 0 8px;">How the words were chosen</h2>
+    <p>Every word carries a hint written to be guessable rather than technical. A child who has never met <em>pangolin</em> can still reach it from "scaly ant-eater" and a few open letters, which is the point: the game teaches words instead of testing which ones were already known. Words are grouped by theme rather than shuffled together, and each theme is filled out enough that a session stays inside one subject instead of skipping between unrelated words.</p>
+
+    <h2 style="font-size: 1.4em; color: #4D96FF; margin: 26px 0 10px;">A couple of examples</h2>
+    <p style="margin-top: 0;">Two themes, with a handful of words from each list to show the range and how the hints read.</p>
+
+    <section style="margin: 18px 0; background: #fff; border: 3px solid #4D96FF; border-radius: 22px; padding: 20px; box-shadow: 0 6px 18px rgba(77,150,255,0.12);">
+      <h3 style="font-size: 1.35em; margin: 0 0 14px; color: #4D96FF;">🦁  Animals</h3>
+      <div style="font-weight: 700; color: #C97B16; margin-bottom: 6px;">Easy</div>
+      <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 4px 20px; margin: 0 0 16px; padding: 0 0 0 18px;">
+        <li><strong>RABBIT</strong> — hops and has long ears</li>
+        <li><strong>MONKEY</strong> — swings in the trees</li>
+        <li><strong>PENGUIN</strong> — bird that swims, not flies</li>
+        <li><strong>GIRAFFE</strong> — tallest animal of all</li>
+      </ul>
+      <div style="font-weight: 700; color: #C97B16; margin-bottom: 6px;">Harder</div>
+      <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 4px 20px; margin: 0; padding: 0 0 0 18px;">
+        <li><strong>PANGOLIN</strong> — scaly ant-eater</li>
+        <li><strong>ARMADILLO</strong> — rolls into an armoured ball</li>
+        <li><strong>CHAMELEON</strong> — lizard that changes colour</li>
+        <li><strong>ORANGUTAN</strong> — great ape with orange hair</li>
+      </ul>
+    </section>
+
+    <section style="margin: 18px 0; background: #fff; border: 3px solid #4D96FF; border-radius: 22px; padding: 20px; box-shadow: 0 6px 18px rgba(77,150,255,0.12);">
+      <h3 style="font-size: 1.35em; margin: 0 0 14px; color: #4D96FF;">🚀  Space</h3>
+      <div style="font-weight: 700; color: #C97B16; margin-bottom: 6px;">Easy</div>
+      <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 4px 20px; margin: 0 0 16px; padding: 0 0 0 18px;">
+        <li><strong>MOON</strong> — it glows at night</li>
+        <li><strong>ROCKET</strong> — flies up into space</li>
+        <li><strong>PLANET</strong> — Earth is one of these</li>
+        <li><strong>COMET</strong> — icy ball with a bright tail</li>
+      </ul>
+      <div style="font-weight: 700; color: #C97B16; margin-bottom: 6px;">Harder</div>
+      <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 4px 20px; margin: 0; padding: 0 0 0 18px;">
+        <li><strong>TELESCOPE</strong> — makes far things look close</li>
+        <li><strong>SPACE STATION</strong> — home in orbit</li>
+        <li><strong>CONSTELLATION</strong> — pattern made of stars</li>
+        <li><strong>BLACK HOLE</strong> — nothing escapes its pull</li>
+      </ul>
+    </section>
+
+    <h2 style="font-size: 1.4em; color: #4D96FF; margin: 26px 0 8px;">Using the words away from the screen</h2>
+    <p>The same words work on paper. Write the blanks out, give the hint aloud, and let a child call letters — the <a href="how-to-play.html">how to play page</a> has the coaching order that makes this useful rather than random. For school spelling lists, the game's rules transfer directly: hint first, vowels first, read the pattern.</p>
+
+    <h2 style="font-size: 1.4em; color: #4D96FF; margin: 26px 0 8px;">Who it is for</h2>
+    <p>Parents looking for ten minutes of reading practice that does not feel like homework. Teachers who need a warm-up activity on a projector. Speech and language therapists using themed vocabulary. Grandparents playing with a child over a video call. The game works on phones, tablets and desktops, and needs no sign-in.</p>
+
+    <h2 style="font-size: 1.4em; color: #4D96FF; margin: 26px 0 8px;">How it is funded</h2>
+    <p>The site is free and supported by advertising. There are no subscriptions, no in-game purchases and no paid unlocks — every word and every theme is available to everyone. How advertising and data work on this site is set out in the <a href="privacy.html">privacy policy</a>.</p>
+
+    <h2 style="font-size: 1.4em; color: #4D96FF; margin: 26px 0 8px;">Get in touch</h2>
+    <p>Suggestions for new themes, corrections to a hint, or a word that does not belong: all welcome. The <a href="contact.html">contact page</a> has the details, and corrections are usually applied within a few days.</p>
+
+    <p style="margin-top: 28px;"><a href="index.html" style="display: inline-block; background: #C2453B; color: #fff; padding: 12px 26px; border-radius: 999px; font-size: 1.05em;">Get Started →</a></p>
+  </main>
+
+  <footer style="background: #fff; border-top: 4px solid #FFD93D; padding: 22px 18px 30px; text-align: center;">
+    <div style="display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: center; margin-bottom: 12px;">
+      <a href="index.html">Play the game</a>
+      <a href="how-to-play.html">How to Play</a>
+      <a href="word-games-and-reading.html">Word Games &amp; Reading</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+    </div>
+    <div style="color: #6B6259; font-size: 0.9em;">© 2026 Hangman4Kids.com — free word games for young readers.</div>
+  </footer>
+</div>
+</x-dc>
+</body>
+</html>

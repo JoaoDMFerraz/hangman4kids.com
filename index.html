@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hangman4Kids — Daily Word Game for Kids</title>
+<meta name="description" content="A free daily hangman word game for kids, with a new theme every day.">
+<meta property="og:title" content="Hangman4Kids">
+<meta property="og:description" content="A free daily hangman word game for kids, with a new theme every day.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="hangman-smiley-300x300.png">
+<link rel="icon" type="image/png" sizes="300x300" href="hangman-smiley-300x300.png">
+<link rel="apple-touch-icon" href="hangman-smiley-300x300.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#4D96FF"/><text x="100" y="90" font-size="70" text-anchor="middle" fill="#fff" font-family="sans-serif">🎯</text><text x="100" y="150" font-size="22" text-anchor="middle" fill="#fff" font-family="sans-serif" font-weight="bold">Hangman4Kids</text></svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <script src="./themes-global.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; padding: 0; }
+    @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes colorShift { 0% { stroke: #FF6B6B; } 25% { stroke: #FFD93D; } 50% { stroke: #6BCB77; } 75% { stroke: #4D96FF; } 100% { stroke: #FF6B9D; } }
+    @keyframes eyeColorShift { 0% { fill: #FF6B6B; } 25% { fill: #FFD93D; } 50% { fill: #6BCB77; } 75% { fill: #4D96FF; } 100% { fill: #FF6B9D; } }
+    @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes confettiFall { to { transform: translateY(100vh) rotateZ(360deg); opacity: 0; } }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+  </style>
+</helmet>
+
+<div id="hangman-app-root" style="font-family: 'Fredoka', 'Comic Sans MS', cursive, sans-serif; height: 100%; display: flex; flex-direction: column; gap: 14px; padding: 14px; background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 25%, #6BCB77 50%, #4D96FF 75%, #FF6B9D 100%); background-size: 400% 400%; animation: gradientShift 15s ease infinite; box-sizing: border-box; width: 100%; align-items: center; overflow: scroll; zoom: {{ appZoom }}; height: {{ appHeight }}">
+
+  <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 90%; max-width: 1400px; align-self: center; box-sizing: border-box; z-index: 60;" data-om-label="Header">
+    <h1 id="hangman-title" style="text-align: center; color: #FF6B6B; margin: 0; font-size: 2em; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); animation: bounce 2s infinite;">Hangman4Kids.com</h1>
+    <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%);" data-om-label="Menu">
+      <button onClick="{{ toggleMenu }}" style="display: flex; align-items: center; gap: 8px; background: #fff; color: #C2453B; border: 3px solid #FFD93D; border-radius: 999px; padding: 8px 18px; font-family: 'Fredoka', sans-serif; font-size: 0.95em; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.12);" style-hover="background: #FFF3D6;">☰&nbsp;Menu</button>
+      <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: calc(100% + 8px); right: 0; display: flex; flex-direction: column; min-width: 220px; background: #fff; border: 3px solid #FFD93D; border-radius: 20px; padding: 10px; box-shadow: 0 12px 30px rgba(0,0,0,0.18); animation: popIn 0.15s ease-out;">
+          <a href="how-to-play.html" style="padding: 9px 14px; border-radius: 14px; color: #C2453B; font-weight: 600; text-decoration: none;" style-hover="background: #FFF3D6;">How to Play</a>
+          <a href="word-games-and-reading.html" style="padding: 9px 14px; border-radius: 14px; color: #C2453B; font-weight: 600; text-decoration: none;" style-hover="background: #FFF3D6;">Word Games &amp; Reading</a>
+          <a href="about.html" style="padding: 9px 14px; border-radius: 14px; color: #C2453B; font-weight: 600; text-decoration: none;" style-hover="background: #FFF3D6;">About</a>
+          <a href="contact.html" style="padding: 9px 14px; border-radius: 14px; color: #C2453B; font-weight: 600; text-decoration: none;" style-hover="background: #FFF3D6;">Contact</a>
+          <a href="privacy.html" style="padding: 9px 14px; border-radius: 14px; color: #C2453B; font-weight: 600; text-decoration: none;" style-hover="background: #FFF3D6;">Privacy Policy</a>
+          <a href="terms.html" style="padding: 9px 14px; border-radius: 14px; color: #C2453B; font-weight: 600; text-decoration: none;" style-hover="background: #FFF3D6;">Terms of Use</a>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="{{ mainRowStyle }}">
+
+
+    <div id="hangman-game-card" style="{{ gameCardOuterStyle }}" data-om-label="hangman-game-card">
+
+      <div style="display: flex; flex-direction: {{ topRowDirection }}; gap: 12px; flex-wrap: nowrap; flex: 1 1 auto; min-height: 0; align-items: stretch; align-self: stretch" data-om-label="Left/right columns">
+        <div id="hangman-red-box" style="{{ redBoxOuterStyle }}" data-om-label="Left column">
+          <svg viewBox="0 0 220 280" style="width: auto; max-width: 100%; height: auto; max-height: 100%; flex-shrink: 1;">
+            <circle cx="110" cy="60" r="20" stroke="#333" stroke-width="3" fill="none" style="animation: colorShift 15s ease infinite; {{ headDisplayStyle }}"></circle>
+            <sc-if value="{{ showHead }}">
+              <circle cx="105" cy="57" r="2" fill="#333" style="animation: eyeColorShift 15s ease infinite;"></circle>
+              <circle cx="115" cy="57" r="2" fill="#333" style="animation: eyeColorShift 15s ease infinite;"></circle>
+              <path d="M 105 65 Q 110 68 115 65" stroke="#333" stroke-width="2" fill="none" style="animation: colorShift 15s ease infinite;"></path>
+            </sc-if>
+            <line x1="110" y1="80" x2="110" y2="150" stroke="#333" stroke-width="3" style="animation: colorShift 15s ease infinite; {{ bodyDisplayStyle }}"></line>
+            <line x1="110" y1="100" x2="70" y2="120" stroke="#333" stroke-width="3" style="animation: colorShift 15s ease infinite; {{ leftArmDisplayStyle }}"></line>
+            <line x1="110" y1="100" x2="150" y2="120" stroke="#333" stroke-width="3" style="animation: colorShift 15s ease infinite; {{ rightArmDisplayStyle }}"></line>
+            <line x1="110" y1="150" x2="80" y2="210" stroke="#333" stroke-width="3" style="animation: colorShift 15s ease infinite; {{ leftLegDisplayStyle }}"></line>
+            <line x1="110" y1="150" x2="140" y2="210" stroke="#333" stroke-width="3" style="animation: colorShift 15s ease infinite; {{ rightLegDisplayStyle }}"></line>
+          </svg>
+        </div>
+
+        <div id="hangman-column" style="{{ hangmanColumnStyle }}" data-om-label="Right column">
+          <div style="background: white; padding: 14px; border-radius: 20px; border: 3px solid #4D96FF; box-shadow: 0 4px 14px rgba(77,150,255,0.15); flex-grow: 0; align-self: stretch">
+            <div aria-live="polite" style="{{ wordDisplayStyle }}">{{ wordDisplayText }}</div>
+            <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+              <div aria-live="polite" style="background: linear-gradient(135deg, #FFD93D 0%, #FFEA9C 100%); padding: 10px 14px; border-radius: 12px; border: 2px solid #FF8C42; text-align: center; flex: 1; min-width: 100px;">
+                <div style="font-size: 0.75em; color: #333; font-weight: bold; margin-bottom: 4px;">CHANCES LEFT</div>
+                <div style="font-size: 1.8em; color: #FF6B6B; font-weight: bold; line-height: 1;">{{ triesRemaining }}</div>
+              </div>
+              <button onClick="{{ showHint }}" disabled="{{ hintDisabled }}" style="{{ hintBtnStyle }}">{{ hintButtonText }}</button>
+            </div>
+          </div>
+
+          <div id="hangman-yellow-box" style="{{ yellowBoxStyle }}">
+            <div style="text-align: center; font-weight: bold; color: #FF8C42; font-size: 0.9em; margin-bottom: 8px;">Click Letters or Use Your Keyboard</div>
+            <div style="{{ letterGridStyle }}">
+              <sc-for list="{{ alphabet }}" as="l" hint-placeholder-count="26">
+                <button onClick="{{ l.onClick }}" disabled="{{ l.disabled }}" style="{{ l.style }}">{{ l.letter }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="padding: 16px 14px; border-radius: 20px; border: 3px solid #FF6B1A; box-shadow: 0 4px 14px rgba(255,140,66,0.25); display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #FFFFFF; align-self: auto">
+            <span style="font-size: 1.4em;">{{ themeIcon }}</span>
+            <span style="display: flex; flex-direction: column; align-items: center; line-height: 1.2;">
+              <span style="color: #FF6B1A; font-size: 0.6em; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; opacity: 0.85;">Today's Theme</span>
+              <span style="color: #FF6B1A; font-weight: bold; font-size: 0.95em; letter-spacing: 0.3px">{{ themeName }}</span>
+            </span>
+          </div>
+
+          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; flex-shrink: 0; align-self: stretch" data-om-label="Bottom controls">
+            <div style="{{ progressBoxStyle }}">
+              <div style="font-size: 0.65em; letter-spacing: 0.5px; opacity: 0.85;">PROGRESS</div>
+              <div style="font-size: 1.25em; font-weight: bold; line-height: 1.1;">{{ progressPercent }}%</div>
+              <div style="font-size: 0.7em;">✅ {{ sessionCorrect }} · ❌ {{ sessionWrong }}</div>
+            </div>
+            <button onClick="{{ newGame }}" style="flex: 1; min-width: 80px; padding: 7px 12px; font-size: 0.8em; font-weight: bold; border: none; border-radius: 13px; cursor: pointer; font-family: inherit; box-shadow: 0 3px 10px rgba(0,0,0,0.15); background: linear-gradient(135deg, #4D96FF 0%, #7BB8FF 100%); color: white;">New Word</button>
+            <button onClick="{{ toggleDifficulty }}" style="{{ diffToggleStyle }}">{{ diffToggleText }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; z-index: 10000; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease;">
+      <div style="background: linear-gradient(135deg, #FFFACD, #FFE4B5); border: 7px solid #FFD700; border-radius: 32px; padding: 32px; text-align: center; max-width: 440px; width: 90%; box-shadow: 0 10px 50px rgba(0,0,0,0.3); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);">
+        <div style="{{ modalMessageStyle }}">{{ modalMessage }}</div>
+        <button onClick="{{ closeModal }}" style="background: linear-gradient(135deg, #4D96FF 0%, #7BB8FF 100%); color: white; border: none; padding: 14px 34px; font-size: 1.15em; font-weight: bold; border-radius: 20px; cursor: pointer; font-family: inherit; box-shadow: 0 6px 18px rgba(77,150,255,0.3); margin-top: 16px;">Play Again!</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ shareModalOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; z-index: 10001; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; padding: 20px; box-sizing: border-box; overflow-y: auto;">
+      <div style="background: linear-gradient(135deg, #FFFACD, #FFE4B5); border: 7px solid #FFD700; border-radius: 32px; padding: 28px; text-align: center; max-width: 380px; width: 100%; max-height: 90vh; overflow-y: auto; box-sizing: border-box; box-shadow: 0 10px 50px rgba(0,0,0,0.3); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);">
+        <div style="font-size: 1.7em; font-weight: bold; color: #6BCB77; margin-bottom: 2px; font-family: 'Fredoka', 'Comic Sans MS', cursive;">{{ shareHeadline }}</div>
+        <div style="font-size: 1em; color: #333; margin-bottom: 14px; line-height: 1.45;">{{ shareSubline }}</div>
+        <div style="background: white; border-radius: 20px; border: 3px solid #FF6B9D; padding: 10px; margin-bottom: 16px;">
+          <img id="share-win-img" src="hangman-smiley-300x300.png" style="max-width: 100%; max-height: 34vh; width: auto; margin: 0 auto; object-fit: contain; display: block; border-radius: 12px;">
+          <div style="font-size: 0.8em; color: #999; margin-top: 6px;">{{ themeName }} · only {{ shareWrongCount }}/6 wrong guesses</div>
+        </div>
+        <div style="font-size: 0.8em; font-weight: bold; color: #777; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px;">Send it to them</div>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 14px; flex-wrap: wrap;">
+          <button onClick="{{ shareTwitter }}" aria-label="Share on X" title="Share on X" style="background: #000000; color: white; border: none; width: 54px; height: 54px; border-radius: 999px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: inherit; box-shadow: 0 4px 10px rgba(0,0,0,0.35);"><svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg></button>
+          <button onClick="{{ shareFacebook }}" aria-label="Share on Facebook" title="Share on Facebook" style="background: #1877F2; color: white; border: none; width: 54px; height: 54px; border-radius: 999px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: inherit; box-shadow: 0 4px 10px rgba(24,119,242,0.35);"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.24 10.44 22v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.45 2.91h-2.33V22C18.34 21.24 22 17.08 22 12.06z"></path></svg></button>
+          <button onClick="{{ shareWhatsapp }}" aria-label="Share on WhatsApp" title="Share on WhatsApp" style="background: #25D366; color: white; border: none; width: 54px; height: 54px; border-radius: 999px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: inherit; box-shadow: 0 4px 10px rgba(37,211,102,0.35);"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.35-.53.05-1.02.24-3.44-.71-2.92-1.15-4.72-4.18-4.86-4.37-.14-.19-1.13-1.5-1.13-2.86 0-1.36.71-2.03.96-2.31.25-.28.54-.35.73-.35.19 0 .38 0 .54.01.17.01.41-.07.64.49.24.57.81 1.98.88 2.12.07.14.12.31.02.5-.09.19-.36.6-.55.81-.14.16-.3.34-.13.63.16.29.73 1.2 1.56 1.95 1.07.95 1.97 1.25 2.26 1.39.29.14.46.12.63-.07.17-.19.73-.85.93-1.14.19-.29.38-.24.65-.14.26.09 1.67.79 1.96.93.29.14.48.21.55.33.07.12.07.7-.17 1.38z"></path></svg></button>
+        </div>
+        <sc-if value="{{ shareHandoffShown }}" hint-placeholder-val="{{ false }}">
+          <div style="background: #E8F5E9; border: 2px solid #6BCB77; color: #2f6b3a; border-radius: 14px; padding: 8px 12px; font-size: 0.85em; font-weight: bold; margin-bottom: 12px;">{{ shareHandoffNote }}</div>
+        </sc-if>
+        <button onClick="{{ closeShareModal }}" style="background: linear-gradient(135deg, #4D96FF 0%, #7BB8FF 100%); color: white; border: none; padding: 12px 30px; font-size: 1em; font-weight: bold; border-radius: 18px; cursor: pointer; font-family: inherit; box-shadow: 0 6px 18px rgba(77,150,255,0.3);">Keep Playing</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-for list="{{ confetti }}" as="c" hint-placeholder-count="0">
+    <div style="{{ c.style }}"></div>
+  </sc-for>
+
+  <sc-if value="{{ privacyModalOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; z-index: 10002; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; padding: 20px; box-sizing: border-box;">
+      <div style="background: #fff; border: 5px solid #4D96FF; border-radius: 24px; padding: 28px; text-align: left; max-width: 560px; width: 100%; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 50px rgba(0,0,0,0.3); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); font-family: sans-serif;">
+        <div style="font-size: 1.4em; font-weight: bold; color: #FF6B6B; margin-bottom: 4px; font-family: 'Fredoka', 'Comic Sans MS', cursive;">Privacy Policy</div>
+        <div style="font-size: 0.8em; color: #999; margin-bottom: 16px;">Last updated: August 2026</div>
+        <div style="font-size: 0.95em; color: #333; line-height: 1.6;">
+          <p>Hangman4Kids.com is a free word-guessing game for kids and families. This policy explains what information is collected and how it's used.</p>
+          <p><strong>Information we collect</strong><br>We don't require accounts, sign-ups, or personal information to play. Your game progress (correct/wrong counts) is stored only in your own browser's local storage, never sent to our servers.</p>
+          <p><strong>Advertising</strong><br>This site shows ads through Google AdSense and Amazon affiliate links. These third parties may use cookies or similar technology to show relevant ads and may collect data as described in their own privacy policies. We don't control this data collection.</p>
+          <p><strong>Cookies</strong><br>Ad providers may set cookies in your browser. You can clear or block cookies at any time through your browser settings.</p>
+          <p><strong>Children's privacy</strong><br>We don't knowingly collect personal information from children. The game itself requires no personal details to play.</p>
+          <p><strong>Contact</strong><br>Questions about this policy can be sent to the site owner via the contact information provided on this site.</p>
+        </div>
+        <button onClick="{{ closePrivacy }}" style="background: linear-gradient(135deg, #4D96FF 0%, #7BB8FF 100%); color: white; border: none; padding: 12px 30px; font-size: 1em; font-weight: bold; border-radius: 18px; cursor: pointer; font-family: inherit; box-shadow: 0 6px 18px rgba(77,150,255,0.3); margin-top: 18px;">Close</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ aboutModalOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; z-index: 10002; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; padding: 20px; box-sizing: border-box; overflow-y: auto;">
+      <div style="background: #fff; border: 5px solid #6BCB77; border-radius: 24px; padding: 28px; text-align: left; max-width: 560px; width: 100%; max-height: 85vh; overflow-y: auto; box-sizing: border-box; box-shadow: 0 10px 50px rgba(0,0,0,0.3); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); font-family: sans-serif;">
+        <div style="font-size: 1.4em; font-weight: bold; color: #FF6B6B; margin-bottom: 16px; font-family: 'Fredoka', 'Comic Sans MS', cursive;">About Us</div>
+        <div style="font-size: 0.95em; color: #333; line-height: 1.6;">
+          <p>Hangman4Kids.com is a free word game built for kids who are learning to spell and read. There is nothing to install and nothing to sign up for: open the page and play.</p>
+          <p><strong>A new theme every day</strong><br>The game rotates through 30 themes — animals, food, space, sports, holidays and more. Each theme carries hundreds of words, so today's puzzle is never yesterday's puzzle.</p>
+          <p><strong>Easy and Hard</strong><br>Easy words suit early readers. Hard words stretch older kids with longer spellings and richer vocabulary. Every word comes with a hint, so a stuck player always has a way forward.</p>
+          <p><strong>Made for families</strong><br>Progress is counted for the day and resets the next morning, so there's no pressure to keep a streak alive. Wins can be shared with a parent or a friend straight from the game.</p>
+          <p><strong>How the site is funded</strong><br>Hangman4Kids is free to play and paid for by ads and Amazon affiliate links to word games and learning toys. If you buy through one of those links, we may earn a small commission at no extra cost to you.</p>
+          <p><strong>Get in touch</strong><br>Suggestions for new themes or words are welcome — reach the site owner using the contact information on this site.</p>
+        </div>
+        <button onClick="{{ closeAbout }}" style="background: linear-gradient(135deg, #6BCB77 0%, #8FDC98 100%); color: white; border: none; padding: 12px 30px; font-size: 1em; font-weight: bold; border-radius: 18px; cursor: pointer; font-family: inherit; box-shadow: 0 6px 18px rgba(107,203,119,0.35); margin-top: 18px;">Close</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ contactModalOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; z-index: 10002; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; padding: 20px; box-sizing: border-box; overflow-y: auto;">
+      <div style="background: #fff; border: 5px solid #FF8C42; border-radius: 24px; padding: 28px; text-align: left; max-width: 480px; width: 100%; max-height: 85vh; overflow-y: auto; box-sizing: border-box; box-shadow: 0 10px 50px rgba(0,0,0,0.3); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); font-family: sans-serif;">
+        <div style="font-size: 1.4em; font-weight: bold; color: #FF6B6B; margin-bottom: 12px; font-family: 'Fredoka', 'Comic Sans MS', cursive;">Contact Us</div>
+        <div style="font-size: 0.95em; color: #333; line-height: 1.6;">
+          <p>Questions, bug reports, or ideas for new themes and words? Fill in our short contact form and we'll read every one.</p>
+          <p>Please don't include personal details.</p>
+        </div>
+        <a href="https://forms.gle/NRoAHETykGgDyhQB7" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: linear-gradient(135deg, #FF8C42 0%, #FFA96B 100%); color: white; text-decoration: none; padding: 14px 24px; font-size: 1.05em; font-weight: bold; border-radius: 18px; box-shadow: 0 6px 18px rgba(255,140,66,0.35); margin: 18px 0 10px;">Open the contact form →</a>
+        <button onClick="{{ closeContact }}" style="background: linear-gradient(135deg, #4D96FF 0%, #7BB8FF 100%); color: white; border: none; padding: 12px 30px; font-size: 1em; font-weight: bold; border-radius: 18px; cursor: pointer; font-family: inherit; box-shadow: 0 6px 18px rgba(77,150,255,0.3); margin-top: 16px;">Close</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <footer style="display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; justify-content: center; width: 100%; padding: 10px 8px 4px; box-sizing: border-box; font-size: 0.8em; color: #6B6259; font-family: 'Fredoka', sans-serif;" data-om-label="Site footer">
+    <a href="how-to-play.html" style="color: #C2453B; font-weight: 600; text-decoration: none;">How to Play</a>
+    <a href="word-games-and-reading.html" style="color: #C2453B; font-weight: 600; text-decoration: none;">Word Games &amp; Reading</a>
+    <a href="about.html" style="color: #C2453B; font-weight: 600; text-decoration: none;">About</a>
+    <a href="contact.html" style="color: #C2453B; font-weight: 600; text-decoration: none;">Contact</a>
+    <a href="privacy.html" style="color: #C2453B; font-weight: 600; text-decoration: none;">Privacy Policy</a>
+    <a href="terms.html" style="color: #C2453B; font-weight: 600; text-decoration: none;">Terms of Use</a>
+    <span>© 2026 Hangman4Kids.com</span>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const _UNUSED_EASY_WORDS = [
+  ['APPLE','A red or green fruit that grows on trees','Food'],['BABY','A very young child','People'],['BALL','Round toy you can throw','Household'],
+  ['BANANA','Yellow curved fruit','Food'],['BEAR','Large furry animal','Animals'],['BED','Furniture for sleeping','Household'],['BEE','Insect that makes honey','Animals'],
+  ['BELL','Metal object that rings','Household'],['BIRD','Animal with wings and feathers','Animals'],['BOAT','Vehicle that floats on water','Vehicles'],
+  ['BOOK','Pages with words and pictures','Household'],['BOX','Square container','Household'],['BOY','Young male person','People'],['BREAD','Baked food made from flour','Food'],
+  ['BUBBLE','Round ball of air','Household'],['BUTTERFLY','An insect with colorful wings that flies','Animals'],['BUTTON','Small fastener on clothes','Household'],
+  ['CAP','Hat worn on head','Household'],['CAR','Vehicle with four wheels','Vehicles'],['CARROT','Orange vegetable','Food'],['CAT','Pet animal with whiskers','Animals'],
+  ['CHAIR','Furniture you sit on','Household'],['CHEESE','Yellow food made from milk','Food'],['CHERRY','Small red fruit','Food'],['CHICKEN','Bird that lays eggs','Animals'],
+  ['CIRCLE','Round shape','Vocabulary'],['CLOCK','Device that shows time','Household'],['CLOUD','Fluffy thing in the sky','Nature'],['COAT','Clothing worn outside','Household'],
+  ['COIN','Metal money','Household'],['COLD','Low temperature','Vocabulary'],['COMB','Tool for brushing hair','Household'],['COOKIE','Sweet baked treat','Food'],
+  ['CORN','Yellow vegetable or grain','Food'],['COW','Farm animal that makes milk','Animals'],['CRAYON','Colored drawing stick','Household'],['CROWN','Jewelry worn on the head','Household'],
+  ['CUP','Container for drinking','Household'],['DANCE','Moving to music','Vocabulary'],['DESK','Furniture for working','Household'],['DOG','Pet animal that barks','Animals'],
+  ['DOLL','Toy that looks like a person','Household'],['DOLPHIN','Smart sea mammal','Animals'],['DOOR','Entrance to a room','Vocabulary'],['DRUM','Musical instrument you hit','Household'],
+  ['DUCK','Bird that swims','Animals'],['EAR','Body part you hear with','Body'],['EAGLE','Large bird that hunts','Animals'],['EARTH','The planet we live on','Nature'],
+  ['EGG','Round food laid by birds','Food'],['ERASER','Tool to remove pencil marks','Household'],['EYE','Body part you see with','Body'],['FACE','Front part of your head','Body'],
+  ['FAIRY','Magical flying person','People'],['FARM','Land where crops grow','Places'],['FISH','Animal that lives in water','Animals'],['FLAG','Colored cloth on a pole','Household'],
+  ['FLOWER','Colorful plant with petals','Nature'],['FOOD','What you eat','Vocabulary'],['FOREST','Large area with many trees','Nature'],['FORK','Eating utensil with prongs','Household'],
+  ['FOX','Red furry animal','Animals'],['FRIEND','Person you like','People'],['FROG','Jumping green animal','Animals'],['FRUIT','Sweet food from plants','Vocabulary'],
+  ['GARDEN','Place to grow plants','Nature'],['GHOST','Spirit of a dead person','Fantasy'],['GIANT','Extremely large being','People'],['GIFT','Present given to someone','Vocabulary'],
+  ['GIRAFFE','Tall African animal','Animals'],['GIRL','Young female person','People'],['GLASS','Clear drinking container','Household'],['GLOVE','Hand covering','Household'],
+  ['GOAT','Farm animal with horns','Animals'],['GOLD','Yellow precious metal','Vocabulary'],['GOOSE','Water bird larger than duck','Animals'],['GORILLA','Large ape','Animals'],
+  ['GRAPE','Small round fruit','Food'],['GRASS','Green plant covering ground','Nature'],['GUITAR','Stringed instrument','Household'],
+  ['HAND','Body part with fingers','Body'],['HAT','Head covering','Household'],['HEART','Organ that pumps blood','Body'],['HEN','Female chicken','Animals'],
+  ['HIVE','Home for bees','Vocabulary'],['HONEY','Sweet food made by bees','Food'],['HORSE','Animal you can ride','Animals'],['HOUSE','Place where people live','Places'],
+  ['ICE','Frozen water','Household'],['INSECT','Small six-legged creature','Vocabulary'],['ISLAND','Land surrounded by water','Nature'],['JACKET','Warm outer clothing','Vocabulary'],
+  ['JAR','Glass container','Household'],['JELLY','Sweet fruit spread','Food'],['JUICE','Drink made from fruit','Food'],['JUNGLE','Dense tropical forest','Places'],
+  ['KANGAROO','Jumping Australian animal','Animals'],['KETTLE','Pot for boiling water','Household'],['KEY','Tool that opens locks','Household'],['KING','Male ruler','People'],
+  ['KITCHEN','Room for cooking','Places'],['KITE','Toy that flies in wind','Household'],['KITTEN','Baby cat','Animals'],['KNIFE','Cutting tool','Household'],
+  ['LADDER','Tool for climbing','Household'],['LAMP','Light source','Household'],['LEAF','Part of a plant','Nature'],['LEMON','Sour yellow fruit','Food'],
+  ['LETTER','Written message','Vocabulary'],['LION','King of the jungle','Animals'],['LIZARD','Small reptile','Animals'],['MAGNET','Object that attracts metal','Household'],
+  ['MAP','Drawing of a place','Household'],['MELON','Large sweet fruit','Food'],['MILK','White drink from cows','Food'],['MIRROR','Glass that reflects','Household'],
+  ['MONKEY','Playful jungle animal','Animals'],['MOON','Object seen at night','Nature'],['MOUNTAIN','Very tall landform','Nature'],['MOUSE','Small rodent','Animals'],
+  ['MUSHROOM','Fungus that grows in forests','Nature'],['NEST','Home for birds','Vocabulary'],['NOTEBOOK','Book for writing','Household'],['NUMBER','Symbol for counting','Household'],
+  ['NURSE','Person who helps sick people','People'],['OCEAN','Large body of salt water','Nature'],['OCTOPUS','Sea animal with eight arms','Animals'],['ONION','Vegetable with layers','Food'],
+  ['ORANGE','Round citrus fruit','Food'],['OWL','Bird that hoots at night','Animals'],['PAINT','Colored liquid for art','Household'],['PANDA','Black and white bear','Animals'],
+  ['PENCIL','Tool for writing','Household'],['PENGUIN','Flightless bird from Antarctica','Animals'],['PIANO','Musical instrument with keys','Household'],['PIG','Farm animal that oinks','Animals'],
+  ['PILLOW','Soft cushion for sleeping','Household'],['PIRATE','Sea robber','People'],['PIZZA','Round baked dish with toppings','Food'],['PLANET','Large body orbiting a star','Nature'],
+  ['PLANT','Living thing that grows','Nature'],['POCKET','Small pouch in clothing','Household'],['POND','Small body of water','Nature'],['PONY','Small horse','Vocabulary'],
+  ['POTATO','Starchy vegetable','Food'],['PRINCESS','Daughter of a king','People'],['PUMPKIN','Orange autumn vegetable','Food'],['PUPPY','Baby dog','Animals'],
+  ['QUEEN','Female ruler','People'],['QUILT','Warm bed cover','Household'],['RABBIT','Animal with long ears','Animals'],['RAIN','Water falling from clouds','Nature'],
+  ['RAINBOW','Colorful arc in the sky','Nature'],['RIVER','Flowing body of water','Nature'],['ROBOT','Machine that acts like a person','Fantasy'],['ROCKET','Vehicle that flies to space','Vehicles'],
+  ['ROOSTER','Male chicken','Animals'],['ROSE','Fragrant flower','Nature'],['SANDWICH','Food between bread slices','Food'],['SCHOOL','Place for learning','Places'],
+  ['SCISSORS','Tool for cutting paper','Household'],['SEAHORSE','Small curved sea creature','Animals'],['SHARK','Large ocean predator fish','Animals'],['SHEEP','Woolly farm animal','Animals'],
+  ['SHOE','Foot covering','Household'],['SNAIL','Slow creature with a shell','Animals'],['SNAKE','Long legless reptile','Animals'],['SNOWMAN','Figure made of snow','Fantasy'],
+  ['SPIDER','Eight-legged creature','Animals'],['SQUIRREL','Small tree-climbing animal','Animals'],['STAR','Bright object in the night sky','Nature'],['SUN','Star at the center of our solar system','Nature'],
+  ['SWAN','Graceful white water bird','Animals'],['TABLE','Furniture with a flat top','Household'],['TIGER','Striped big cat','Animals'],['TOMATO','Red round fruit','Food'],
+  ['TOOTHBRUSH','Tool for cleaning teeth','Household'],['TRAIN','Vehicle that runs on tracks','Vehicles'],['TREE','Tall plant with a trunk','Vocabulary'],['TRUCK','Large vehicle for hauling','Vehicles'],
+  ['TURTLE','Reptile with a shell','Animals'],['UMBRELLA','Tool to stay dry in rain','Household'],['UNICORN','Mythical horned horse','Fantasy'],['VASE','Container for flowers','Household'],
+  ['VIOLIN','Stringed musical instrument','Household'],['VOLCANO','Mountain that erupts','Nature'],['WAGON','Small cart with wheels','Household'],['WATERMELON','Large juicy green fruit','Food'],
+  ['WHALE','Huge sea mammal','Animals'],['WINDOW','Opening in a wall for light','Household'],['WOLF','Wild relative of dogs','Animals'],['ZEBRA','Striped horse-like animal','Animals'],
+];
+const HARD_WORDS = [
+  ['ABILITY','Skill or talent','Vocabulary'],['ABSORB','Take in or soak up','Vocabulary'],['ABUNDANT','Plentiful or ample','Vocabulary'],['ACADEMY','School or institution','Places'],
+  ['ACCELERATE','Speed up','Vocabulary'],['ACCIDENT','Unplanned event','Vocabulary'],['ACCOMPLISH','Complete successfully','Vocabulary'],['ACCURATE','Precise or correct','Vocabulary'],
+  ['ACHIEVE','Accomplish or attain','Vocabulary'],['ACQUIRE','Obtain or get','Vocabulary'],['ACROBAT','Gymnastic performer','People'],['ADAPT','Adjust to new conditions','Vocabulary'],
+  ['ADEQUATE','Sufficient or satisfactory','Vocabulary'],['ADJACENT','Next to or nearby','Vocabulary'],['ADMIRE','Respect or esteem','Vocabulary'],['ADOLESCENT','Teenager','Vocabulary'],
+  ['ADVANTAGE','Beneficial position','Vocabulary'],['ADVENTURE','Exciting journey','Vocabulary'],['ADVERSARY','Enemy or opponent','Vocabulary'],['AESTHETIC','Artistic or beautiful','Vocabulary'],
+  ['AFFECTION','Fondness','Vocabulary'],['AGGRESSION','Hostile attack','Vocabulary'],['AGILITY','Nimbleness','Vocabulary'],['AGRICULTURE','Farming practices','Geography'],
+  ['ALLEGIANCE','Loyalty or devotion','Vocabulary'],['ALLERGY','Adverse reaction','Vocabulary'],['ALLIANCE','Union or partnership','Vocabulary'],['ALLIGATOR','Large reptile','Animals'],
+  ['ALPHABET','Letters of a language','Vocabulary'],['ALTITUDE','Height above ground','Geography'],['ALUMINUM','Lightweight metal','Household'],['AMAZEMENT','Surprise or wonder','Vocabulary'],
+  ['AMBASSADOR','Official representative','People'],['AMBITIOUS','Having strong goals','Vocabulary'],['AMBULANCE','Emergency vehicle','Vehicles'],['AMPHIBIAN','Land and water animal','Animals'],
+  ['ANALYSIS','Detailed examination','Vocabulary'],['ANATOMY','Body structure','Vocabulary'],['ANCESTOR','Forebear or relative','Vocabulary'],['ANCIENT','Very old','Vocabulary'],
+  ['ANECDOTE','Short story','Vocabulary'],['ANGUISH','Severe pain or suffering','Vocabulary'],['ANIMATION','Movement or liveliness','Vocabulary'],['ANNIVERSARY','Annual celebration','Vocabulary'],
+  ['ANNOUNCE','Make public','Vocabulary'],['ANONYMOUS','Unnamed','Vocabulary'],['ANTAGONIST','Opponent','Vocabulary'],['ANTARCTIC','South polar region','Geography'],
+  ['ANTELOPE','Horned animal','Animals'],['ANTHOLOGY','Collection of works','Vocabulary'],['ANTIBIOTIC','Bacteria fighter','Vocabulary'],['ANTICIPATE','Expect or foresee','Vocabulary'],
+  ['APPRECIATE','Value or be grateful for','Vocabulary'],['ARCHITECT','Building designer','People'],['ARTIFICIAL','Not natural, man-made','Vocabulary'],['ASSEMBLE','Put together','Vocabulary'],
+  ['ASTONISH','Surprise greatly','Vocabulary'],['ATMOSPHERE','Air surrounding Earth','Nature'],['ATTENTIVE','Paying close attention','Vocabulary'],['AUTHENTIC','Genuine or real','Vocabulary'],
+  ['AVALANCHE','Mass of falling snow','Nature'],['AWKWARD','Clumsy or uncomfortable','Vocabulary'],['BENEFICIAL','Helpful or advantageous','Vocabulary'],['BOUNDARY','Dividing line','Vocabulary'],
+  ['CATASTROPHE','Sudden great disaster','Vocabulary'],['CELEBRATE','Honor a special occasion','Vocabulary'],['CHALLENGE','Difficult task','Vocabulary'],['CIRCUMSTANCE','Condition or fact','Vocabulary'],
+  ['COLLABORATE','Work together','Vocabulary'],['COMPASSION','Sympathy for others','Vocabulary'],['CONFIDENT','Sure of oneself','Vocabulary'],['CONTRIBUTE','Give to help','Vocabulary'],
+  ['CURIOSITY','Desire to learn','Vocabulary'],['DETERMINED','Firmly decided','Vocabulary'],['DISCOVER','Find something new','Vocabulary'],['ENTHUSIASM','Eager enjoyment','Vocabulary'],
+  ['ENVIRONMENT','Surroundings','Nature'],['EXAGGERATE','Overstate','Vocabulary'],['EXTRAORDINARY','Very unusual','Vocabulary'],['FASCINATE','Attract strongly','Vocabulary'],
+  ['GENEROUS','Willing to give','Vocabulary'],['GRATITUDE','Thankfulness','Vocabulary'],['HESITATE','Pause before acting','Vocabulary'],['IMAGINATION','Ability to form ideas','Vocabulary'],
+  ['INDEPENDENT','Self-reliant','Vocabulary'],['INSPIRATION','Stimulus for creativity','Vocabulary'],['JUSTIFY','Give a good reason','Vocabulary'],['KNOWLEDGE','Facts and information','Vocabulary'],
+  ['MAGNIFICENT','Extremely beautiful','Vocabulary'],['NEGOTIATE','Discuss to reach agreement','Vocabulary'],['OBSTACLE','Something blocking progress','Vocabulary'],['PERSEVERE','Keep trying','Vocabulary'],
+  ['QUALIFY','Meet requirements','Vocabulary'],['RESPONSIBLE','Accountable','Vocabulary'],['SIGNIFICANT','Important','Vocabulary'],['TREMENDOUS','Very great','Vocabulary'],
+  ['UNIVERSAL','Applying to all','Vocabulary'],['VOCABULARY','Words known','Vocabulary'],['WILDERNESS','Wild natural land','Nature'],['YOUTHFUL','Young in appearance','Vocabulary'],
+];
+const BODY_PARTS = ['head','body','leftarm','rightarm','leftleg','rightleg'];
+const LETTER_STYLE_BASE = {
+  padding: '8px', fontSize: '0.95em', fontWeight: 'bold', border: '2px solid #FFD93D',
+  background: 'linear-gradient(135deg, #FFE66D 0%, #FFED4E 100%)', color: '#333', borderRadius: '12px',
+  cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 3px 8px rgba(255,217,61,0.3)',
+};
+const LETTER_STYLE_CORRECT = { ...LETTER_STYLE_BASE, opacity: 0.4, cursor: 'not-allowed', background: '#DDD', borderColor: '#999', color: '#999' };
+const LETTER_STYLE_WRONG = { ...LETTER_STYLE_BASE, opacity: 0.4, cursor: 'not-allowed', background: '#DDD', borderColor: '#999', color: '#999' };
+
+const WORD_CURSOR_KEY = 'h4k-word-cursors';
+
+function readCursors() {
+  try { return JSON.parse(localStorage.getItem(WORD_CURSOR_KEY) || '{}') || {}; } catch (e) { return {}; }
+}
+
+// Walks each theme/difficulty list in order, wrapping at the end, so no word
+// repeats until the whole list has been played.
+function pickWord(list, key) {
+  const cursors = readCursors();
+  const i = (typeof cursors[key] === 'number' ? cursors[key] : 0) % list.length;
+  cursors[key] = (i + 1) % list.length;
+  try { localStorage.setItem(WORD_CURSOR_KEY, JSON.stringify(cursors)); } catch (e) {}
+  const [word, hint] = list[i];
+  return { word, hint };
+}
+
+class Component extends DCLogic {
+  state = {
+    difficulty: 'easy',
+    themeIndex: 0, themeIconState: '',
+    selectedWord: '', selectedHint: '', selectedCategory: '',
+    guessedLetters: [], wrongGuesses: [],
+    gameOver: false, gameWon: false, hintUsed: false,
+    modalOpen: false, modalMessage: '', modalWon: false,
+    shareModalOpen: false, lastAttemptWrong: 0, lastAttemptWord: '',
+    privacyModalOpen: false, aboutModalOpen: false, contactModalOpen: false,
+    shareImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7',
+    confetti: [],
+    sessionCorrect: Component._todayScore().correct,
+    sessionWrong: Component._todayScore().wrong,
+    shakeWord: false,
+    vw: typeof window !== 'undefined' ? window.innerWidth : 1280,
+    vh: typeof window !== 'undefined' ? window.innerHeight : 800,
+  };
+
+  static _dayKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  // Progress is per-day: a stored date other than today's reads back as 0/0.
+  static _todayScore() {
+    if (typeof window === 'undefined') return { correct: 0, wrong: 0 };
+    if (localStorage.getItem('h4k_date') !== Component._dayKey()) return { correct: 0, wrong: 0 };
+    return {
+      correct: parseInt(localStorage.getItem('h4k_correct') || '0', 10),
+      wrong: parseInt(localStorage.getItem('h4k_wrong') || '0', 10),
+    };
+  }
+
+  _saveScore(correct, wrong) {
+    localStorage.setItem('h4k_date', Component._dayKey());
+    localStorage.setItem('h4k_correct', correct);
+    localStorage.setItem('h4k_wrong', wrong);
+  }
+
+  componentDidMount() {
+    // themes-global.js is loaded from the helmet so the word data survives
+    // bundling into a single standalone file; the dynamic import is the fallback.
+    const load = window.THEMES
+      ? Promise.resolve({ THEMES: window.THEMES })
+      : import('./themes-data.js');
+    load.then((mod) => {
+      this._themes = mod.THEMES;
+      const start = new Date(new Date().getFullYear(), 0, 0);
+      const dayOfYear = Math.floor((Date.now() - start.getTime()) / 86400000);
+      const themeIndex = dayOfYear % this._themes.length;
+      this.setState({ themeIndex }, () => this._start());
+    });
+    this._onKey = (e) => this._handleKey(e);
+    this._onResize = () => this.setState({ vw: window.innerWidth, vh: window.innerHeight });
+    window.addEventListener('keydown', this._onKey);
+    window.addEventListener('resize', this._onResize);
+    this._measureRedBox = () => {
+      const el = document.getElementById('hangman-red-box');
+      if (el) this.setState({ redBoxWidth: el.getBoundingClientRect().width });
+      const col = document.getElementById('hangman-column');
+      if (col) this.setState({ redBoxMaxHeight: col.getBoundingClientRect().height });
+      const area = document.getElementById('hangman-game-card');
+      if (area) this.setState({ adMaxHeight: area.getBoundingClientRect().height });
+      const title = document.getElementById('hangman-title');
+      if (title) this.setState({ adTopOffset: title.getBoundingClientRect().height + 14 });
+      const root = document.getElementById('hangman-app-root');
+      if (root) this.setState({ containerWidth: root.getBoundingClientRect().width });
+      const yb = document.getElementById('hangman-yellow-box');
+      if (yb) this.setState({ yellowBoxHeight: yb.getBoundingClientRect().height });
+    };
+    this._ro = new ResizeObserver(this._measureRedBox);
+    requestAnimationFrame(() => {
+      const el = document.getElementById('hangman-red-box');
+      const col = document.getElementById('hangman-column');
+      const area = document.getElementById('hangman-game-card');
+      const title = document.getElementById('hangman-title');
+      const root = document.getElementById('hangman-app-root');
+      if (el) this._ro.observe(el);
+      if (col) this._ro.observe(col);
+      if (area) this._ro.observe(area);
+      if (title) this._ro.observe(title);
+      if (root) this._ro.observe(root);
+      const yb = document.getElementById('hangman-yellow-box');
+      if (yb) this._ro.observe(yb);
+      this._measureRedBox();
+    });
+  }
+
+  _beep(freq, duration) {
+    try {
+      const ctx = this._audioCtx || (this._audioCtx = new (window.AudioContext || window.webkitAudioContext)());
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    } catch (e) {}
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this._onKey);
+    window.removeEventListener('resize', this._onResize);
+    if (this._ro) this._ro.disconnect();
+  }
+
+  _start() {
+    if (!this._themes) return;
+    const theme = this._themes[this.state.themeIndex];
+    const list = this.state.difficulty === 'easy' ? theme.easy : theme.hard;
+    const { word, hint } = pickWord(list, theme.name + '|' + this.state.difficulty);
+    this.setState({
+      selectedWord: word, selectedHint: hint, selectedCategory: theme.name, themeIconState: theme.icon,
+      guessedLetters: [], wrongGuesses: [],
+      gameOver: false, gameWon: false, hintUsed: false,
+      modalOpen: false, confetti: [],
+    });
+  }
+
+  _handleKey(e) {
+    if (this.state.gameOver) return;
+    const letter = e.key.toUpperCase();
+    if (/^[A-Z]$/.test(letter)) this._guess(letter);
+  }
+
+  _guess(letter) {
+    const { guessedLetters, wrongGuesses, gameOver, selectedWord } = this.state;
+    if (gameOver || guessedLetters.includes(letter) || wrongGuesses.includes(letter)) return;
+    let newGuessed = guessedLetters, newWrong = wrongGuesses;
+    if (selectedWord.includes(letter)) {
+      newGuessed = [...guessedLetters, letter];
+      this._beep(660, 0.15);
+    } else {
+      newWrong = [...wrongGuesses, letter];
+      this._beep(180, 0.25);
+      this.setState({ shakeWord: true });
+      setTimeout(() => this.setState({ shakeWord: false }), 400);
+    }
+    const won = selectedWord.split('').every(ch => ch === ' ' || newGuessed.includes(ch));
+    const lost = newWrong.length >= 6;
+    this.setState({ guessedLetters: newGuessed, wrongGuesses: newWrong }, () => {
+      if (won) {
+        this._beep(880, 0.2);
+        setTimeout(() => this._beep(1175, 0.3), 150);
+        this.setState(s => {
+          const sessionCorrect = s.sessionCorrect + 1;
+          this._saveScore(sessionCorrect, s.sessionWrong);
+          return { gameWon: true, gameOver: true, confetti: this._makeConfetti(), sessionCorrect };
+        }, () => {
+          if (this.state.sessionCorrect > 0 && this.state.sessionCorrect % 2 === 0) {
+            this.setState({ lastAttemptWrong: newWrong.length, lastAttemptWord: selectedWord });
+            const cardEl = document.getElementById('hangman-game-card');
+            if (window.html2canvas && cardEl) {
+              window.html2canvas(cardEl, { backgroundColor: '#FFFACD', scale: 1.5 }).then((canvas) => {
+                const dataUrl = canvas.toDataURL('image/png');
+                this.setState({ shareModalOpen: true, shareImage: dataUrl }, () => {
+                  const imgEl = document.getElementById('share-win-img');
+                  if (imgEl) imgEl.src = dataUrl;
+                });
+              }).catch(() => this.setState({ shareModalOpen: true }));
+            } else {
+              this.setState({ shareModalOpen: true });
+            }
+          } else {
+            setTimeout(() => this._start(), 1800);
+          }
+        });
+      } else if (lost) {
+        this._beep(140, 0.4);
+        this.setState(s => {
+          const sessionWrong = s.sessionWrong + 1;
+          this._saveScore(s.sessionCorrect, sessionWrong);
+          return { gameOver: true, modalOpen: true, modalMessage: `The word was: ${selectedWord}`, modalWon: false, sessionWrong };
+        });
+      }
+    });
+  }
+
+  _openShareUrl(url) {
+    const a = document.createElement('a');
+    a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+
+  _downloadShareImage() {
+    const a = document.createElement('a');
+    a.href = this.state.shareImage; a.download = 'hangman4kids-win.png';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+
+  async _shareTo(platform, text, fallbackUrl) {
+    let blob = null;
+    try {
+      blob = await (await fetch(this.state.shareImage)).blob();
+      const file = new File([blob], 'hangman4kids-win.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'Hangman4Kids', text, url: location.href });
+        return;
+      }
+    } catch (e) {}
+    // Web intents can't carry an attachment, so hand the PNG over first:
+    // clipboard when allowed, otherwise a download.
+    let handed = false;
+    if (blob) {
+      try {
+        if (navigator.clipboard && window.ClipboardItem) {
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          handed = 'clipboard';
+        }
+      } catch (e) {}
+      if (!handed) { this._downloadShareImage(); handed = 'download'; }
+      this.setState({ shareHandoff: handed });
+    }
+    this._openShareUrl(fallbackUrl);
+  }
+
+  _makeConfetti() {
+    const colors = ['#FFD93D', '#FF6B6B', '#4D96FF', '#6BCB77', '#FF8C42'];
+    return Array.from({ length: 300 }, (_, i) => {
+      const size = Math.random() * 8 + 5;
+      return {
+        id: i,
+        style: {
+          position: 'fixed', pointerEvents: 'none', zIndex: 9999,
+          left: Math.random() * 100 + 'vw', top: '-10px',
+          width: size + 'px', height: size + 'px',
+          background: colors[Math.floor(Math.random() * colors.length)],
+          borderRadius: Math.random() * 50 + '%',
+          opacity: Math.random() * 0.8 + 0.2,
+          animation: `confettiFall 3s ease-in forwards`,
+          animationDelay: (Math.random() * 0.5) + 's',
+          transform: `rotateZ(${Math.random() * 360}deg)`,
+        },
+      };
+    });
+  }
+
+  renderVals() {
+    const { selectedWord, guessedLetters, wrongGuesses, difficulty, hintUsed, gameOver, selectedHint, modalOpen, modalMessage, modalWon, confetti, vw, vh, sessionCorrect, sessionWrong, shakeWord, shareModalOpen, lastAttemptWrong, lastAttemptWord, selectedCategory } = this.state;
+    const wordDisplayText = selectedWord.split('').map(ch => (ch === ' ' ? '\u2002\u2002' : guessedLetters.includes(ch) ? ch : '_')).join(' ');
+    const wrongCount = wrongGuesses.length;
+
+    // On big screens scale the whole UI up proportionally instead of leaving
+    // margins around a fixed-size card. 1.0 up to 1400px wide, then linear.
+    const uiZoom = Math.min(1.7, Math.max(1, Math.min(vw / 1400, vh / 900)));
+    const lw = vw / uiZoom, lh = vh / uiZoom;
+    const appZoom = String(Number(uiZoom.toFixed(4)));
+    const appHeight = Math.floor(lh) + 'px';
+
+    const sidebarsWidth = lw >= 700 ? 440 : 0;
+    const effectiveWidth = this.state.containerWidth || lw;
+    const isMobile = effectiveWidth < 950;
+    const gameMaxWidth = Math.round(Math.min(1000, Math.max(320, lw - sidebarsWidth - 60)));
+    const mainMaxWidth = Math.round(lw - 20);
+
+    // Shrink the letter keys to fit the yellow box instead of overflowing.
+    const gridRows = Math.ceil(26 / (isMobile ? 7 : 9));
+    const gridAvail = (this.state.yellowBoxHeight || 0) - 30 /* label */ - 24 /* padding */;
+    const rawKey = gridAvail > 0 ? Math.floor((gridAvail - 6 * (gridRows - 1)) / gridRows) : 44;
+    const keySize = Math.max(24, Math.min(48, rawKey));
+    const keyFit = {
+      height: keySize + 'px', minHeight: keySize + 'px', padding: '0px', lineHeight: 1,
+      fontSize: Math.max(10, Math.min(18, Math.round(keySize * 0.44))) + 'px',
+      borderRadius: Math.max(6, Math.round(keySize * 0.28)) + 'px',
+      borderWidth: keySize < 30 ? '1px' : '2px',
+    };
+    const letterBase = { ...LETTER_STYLE_BASE, ...keyFit };
+    const letterCorrect = { ...LETTER_STYLE_CORRECT, ...keyFit };
+    const letterWrong = { ...LETTER_STYLE_WRONG, ...keyFit };
+
+    const alphabet = Array.from({ length: 26 }, (_, i) => {
+      const letter = String.fromCharCode(65 + i);
+      const isCorrect = guessedLetters.includes(letter);
+      const isWrong = wrongGuesses.includes(letter);
+      const disabled = isCorrect || isWrong || gameOver;
+      return {
+        letter, disabled,
+        onClick: () => this._guess(letter),
+        style: isCorrect ? letterCorrect : isWrong ? letterWrong : (gameOver ? { ...letterBase, opacity: 0.4, cursor: 'not-allowed' } : letterBase),
+      };
+    });
+
+    const easyActive = difficulty === 'easy';
+    const diffToggleStyle = {
+      flex: 1.4, minWidth: '90px', padding: '7px 12px', fontSize: '0.8em', fontWeight: 'bold',
+      border: 'none', borderRadius: '13px', cursor: 'pointer', fontFamily: 'inherit',
+      boxShadow: '0 3px 10px rgba(0,0,0,0.15)', color: 'white',
+      background: easyActive ? 'linear-gradient(135deg, #6BCB77 0%, #7FD899 100%)' : 'linear-gradient(135deg, #FF6B6B 0%, #FF8383 100%)',
+    };
+
+    const partStyle = (n) => (wrongCount >= n ? { display: 'block' } : { display: 'none' });
+
+    const shareMsg = `I solved ${lastAttemptWord} in today's ${selectedCategory} theme on Hangman4Kids — ${sessionCorrect} ${sessionCorrect === 1 ? 'word' : 'words'} so far today. Can you beat me?`;
+
+    return {
+      wordDisplayText,
+      wordDisplayStyle: {
+        fontSize: '1.8em', letterSpacing: '6px', textAlign: 'center', marginBottom: '12px', fontWeight: 'bold',
+        color: shakeWord ? '#FF6B6B' : '#4D96FF', fontFamily: "'Courier New', monospace", minHeight: '46px',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', wordBreak: 'break-word',
+        animation: shakeWord ? 'shake 0.4s ease' : 'none',
+      },
+      triesRemaining: 6 - wrongCount,
+      alphabet,
+      hintButtonText: hintUsed ? '💡 ' + selectedHint : '💡 Get Hint',
+      hintDisabled: hintUsed || gameOver,
+      hintBtnStyle: {
+        flex: 1, padding: '10px 14px', background: hintUsed ? '#999' : 'linear-gradient(135deg, #6BCB77 0%, #7FD899 100%)',
+        color: 'white', border: 'none', borderRadius: '13px', fontSize: '0.9em', fontWeight: 'bold',
+        cursor: hintUsed ? 'not-allowed' : 'pointer', fontFamily: 'inherit', minWidth: '120px',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', lineHeight: 1.3,
+      },
+      showHead: wrongCount >= 1,
+      headDisplayStyle: `display:${wrongCount >= 1 ? 'block' : 'none'}`,
+      bodyDisplayStyle: `display:${wrongCount >= 2 ? 'block' : 'none'}`,
+      leftArmDisplayStyle: `display:${wrongCount >= 3 ? 'block' : 'none'}`,
+      rightArmDisplayStyle: `display:${wrongCount >= 4 ? 'block' : 'none'}`,
+      leftLegDisplayStyle: `display:${wrongCount >= 5 ? 'block' : 'none'}`,
+      rightLegDisplayStyle: `display:${wrongCount >= 6 ? 'block' : 'none'}`,
+      diffToggleStyle, diffToggleText: easyActive ? 'Easy' : 'Hard',
+      toggleDifficulty: () => this.setState({ difficulty: easyActive ? 'hard' : 'easy' }, () => this._start()),
+      resetGame: () => this._start(),
+      newGame: () => this._start(),
+      showHint: () => { if (!hintUsed && !gameOver) this.setState({ hintUsed: true }); },
+      modalOpen, modalMessage,
+      modalMessageStyle: {
+        fontSize: '2.2em', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.5px',
+        fontFamily: "'Fredoka', 'Comic Sans MS', cursive", color: modalWon ? '#6BCB77' : '#FF6B6B',
+        animation: modalWon ? 'bounce 0.6s ease' : 'none',
+      },
+      closeModal: () => { this.setState({ modalOpen: false }); this._start(); },
+      currentYear: new Date().getFullYear(),
+      privacyModalOpen: this.state.privacyModalOpen,
+      openPrivacy: (e) => { if (e) e.preventDefault(); this.setState({ privacyModalOpen: true }); },
+      closePrivacy: () => this.setState({ privacyModalOpen: false }),
+      aboutModalOpen: this.state.aboutModalOpen,
+      openAbout: (e) => { if (e) e.preventDefault(); this.setState({ aboutModalOpen: true }); },
+      closeAbout: () => this.setState({ aboutModalOpen: false }),
+      contactModalOpen: this.state.contactModalOpen,
+      openContact: (e) => { if (e) e.preventDefault(); this.setState({ contactModalOpen: true }); },
+      closeContact: () => this.setState({ contactModalOpen: false }),
+      shareModalOpen,
+      shareWord: lastAttemptWord,
+      shareWrongCount: lastAttemptWrong,
+      shareImage: this.state.shareImage,
+      shareHandoffNote: this.state.shareHandoff === 'clipboard'
+        ? 'Picture copied! Paste it into your post 📋'
+        : this.state.shareHandoff === 'download'
+          ? 'Picture saved to your downloads — attach it to your post 📎'
+          : '',
+      shareHandoffShown: !!this.state.shareHandoff,
+      shareHeadline: sessionCorrect + (sessionCorrect === 1 ? ' word solved today! 🎉' : ' words solved today! 🎉'),
+      shareSubline: 'Show Mum, Dad or a friend your ' + selectedCategory + ' win — then dare them to beat ' + sessionCorrect + (sessionCorrect === 1 ? ' word.' : ' words.'),
+      closeShareModal: () => { this.setState({ shareModalOpen: false, shareHandoff: null }); this._start(); },
+      shareTwitter: () => this._shareTo('twitter', shareMsg, `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMsg)}&url=${encodeURIComponent(location.href)}`),
+      shareFacebook: () => this._shareTo('facebook', shareMsg, `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`),
+      shareWhatsapp: () => this._shareTo('whatsapp', shareMsg + ' Play here: ' + location.href, `https://wa.me/?text=${encodeURIComponent(shareMsg + ' Play here: ' + location.href)}`),
+      confetti,
+      themeIcon: this.state.themeIconState || '📖',
+      themeName: selectedCategory,
+      gameMaxWidth,
+      mainMaxWidth,
+      isMobile,
+      appZoom, appHeight,
+      menuOpen: !!this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      showSidebars: !isMobile,
+      mainRowStyle: {
+        display: 'flex', gap: '16px', alignItems: 'stretch', justifyContent: 'center',
+        width: '90%', maxWidth: '1400px', flex: 1, alignSelf: 'center', overflow: 'visible',
+        flexDirection: isMobile ? 'column' : 'row',
+      },
+      gameCardOuterStyle: {
+        height: isMobile ? 'auto' : '100%', flex: 1, width: '100%', minWidth: isMobile ? 0 : '480px',
+        display: 'flex', flexDirection: 'column', gap: '0px', alignItems: 'stretch', justifyContent: 'flex-start',
+      },
+      redBoxOuterStyle: {
+        flex: isMobile ? '0 0 35%' : 1, minWidth: isMobile ? 0 : '110px', minHeight: isMobile ? '90px' : 0,
+        textAlign: 'center', background: 'white', padding: '12px', borderRadius: '20px',
+        border: '3px solid #FF6B9D', boxShadow: '0 4px 14px rgba(255,107,157,0.15)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
+        boxSizing: 'border-box', width: 'auto', maxHeight: 'none',
+      },
+      hangmanColumnStyle: {
+        flex: isMobile ? '1 1 0' : 1.6, minWidth: isMobile ? 0 : '160px', width: 'auto',
+        display: 'flex', flexDirection: 'column', gap: '12px', minHeight: 0,
+        alignSelf: isMobile ? 'auto' : 'stretch',
+      },
+      yellowBoxStyle: {
+        background: 'white', padding: '10px', borderRadius: '20px', border: '3px solid #FFD93D',
+        boxShadow: '0 4px 14px rgba(255,217,61,0.15)', flex: isMobile ? '0 0 auto' : 1,
+        minHeight: '90px', maxHeight: isMobile ? '240px' : '320px',
+        display: 'flex', flexDirection: 'column', alignSelf: 'stretch', overflow: 'hidden',
+      },
+      letterGridStyle: {
+        display: 'grid', gridTemplateColumns: isMobile ? 'repeat(7, 1fr)' : 'repeat(9, 1fr)',
+        gap: '6px', flex: 1, alignContent: 'center',
+        minHeight: 0, overflowY: 'auto', overflowX: 'hidden',
+        WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain', paddingRight: '2px',
+      },
+      adMaxHeight: this.state.adMaxHeight || 500,
+      adTopOffset: this.state.adTopOffset || 0,
+      redBoxMaxHeight: this.state.redBoxMaxHeight || 300,
+      topRowDirection: 'row',
+      gameCardStyle: {
+        background: 'linear-gradient(135deg, #FFFACD 0%, #FFE4B5 100%)', padding: '18px', borderRadius: '28px',
+        boxShadow: '0 12px 40px rgba(0,0,0,0.15)', width: '100%', maxWidth: gameMaxWidth + 'px',
+        border: '5px solid #FFD700', boxSizing: 'border-box', display: 'flex', flexDirection: 'column',
+        height: '100%', minHeight: 0, overflow: 'hidden', gap: '8px',
+      },
+      sessionCorrect, sessionWrong,
+      progressPercent: (sessionCorrect + sessionWrong) === 0 ? 0 : Math.round((sessionCorrect / (sessionCorrect + sessionWrong)) * 100),
+      progressBoxStyle: {
+        flex: '0 0 auto', boxSizing: 'border-box', width: (this.state.redBoxWidth || 160) + 'px', minWidth: '100px', background: 'linear-gradient(135deg, #FFD93D 0%, #FFEA9C 100%)',
+        border: '2px solid #FF8C42', borderRadius: '16px', padding: '8px 12px', textAlign: 'center',
+        color: '#5c4a1a', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '2px',
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

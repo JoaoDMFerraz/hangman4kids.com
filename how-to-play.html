@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    a { color: #C2453B; text-decoration: none; font-weight: 600; }
+    a:hover { color: #99342C; text-decoration: underline; }
+  </style>
+</helmet>
+
+<div style="font-family: 'Fredoka', system-ui, sans-serif; color: #33302C; line-height: 1.65; background: linear-gradient(160deg, {{ topBgColor }} 0%, #FFE9D6 100%); min-height: 100vh; box-sizing: border-box;">
+  <nav style="display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; justify-content: center; padding: 14px 18px; background: #fff; border-bottom: 4px solid #FFD93D;">
+    <a href="index.html" style="font-size: 1.15em; font-weight: 700; color: #FF6B6B; margin-right: 10px; text-decoration: none;" style-hover="text-decoration: none; color: #FF6B6B;"><img src="hangman-smiley-300x300.png" alt="" style="width: 26px; height: 26px; border-radius: 50%; vertical-align: middle; margin-right: 6px;">Hangman4Kids</a>
+    <a href="index.html">Play</a>
+    <a href="how-to-play.html">How to Play</a>
+    <a href="word-games-and-reading.html">Word Games &amp; Reading</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main style="max-width: 760px; margin: 0 auto; padding: 28px 18px 48px; box-sizing: border-box; font-size: 1.06em;">
+    <h1 style="font-size: 2.1em; color: #FF6B6B; margin: 0 0 12px;">How to play hangman with kids</h1>
+    <p>Hangman is one of the few word games a five-year-old and a ten-year-old can play at the same table. This page covers the rules and the coaching that turns a guessing game into reading practice.</p>
+
+    <h2 style="font-size: 1.45em; color: #4D96FF; margin: 28px 0 8px;">The rules</h2>
+    <p>Start by looking at the hint (or not if you are confident) and tries a letter that you think it's likely to appear. The other player calls out letters. If the letter appears in the word then it is written into every blank where it belongs. A letter that does not appear costs an attempt and one part of the hangman figure is drawn. You win by completing the word before the drawing is finished; the drawing being finished means that the round is lost. The player gets six wrong letters, and the figure is drawn head, body, two arms, two legs.</p>
+    <p>Two details matter when you play with young children. First, always give a hint or a category — "an animal", "something in the kitchen" — because guessing letters at random teaches nothing. Second, spaces in multi-word answers should be free: show them from the start, so <strong>SEA TURTLE</strong> appears as two groups of blanks rather than one long run. Children read the shape of the phrase and get a real foothold.</p>
+
+    <h2 style="font-size: 1.45em; color: #4D96FF; margin: 28px 0 8px;">Tips<br></h2>
+    <ol style="padding-left: 22px;">
+      <li><strong>Start with vowels.</strong> Every English word has at least one. A, E, I, O and U cost at most five guesses and usually open up the skeleton of the word.</li>
+      <li><strong>Then the common consonants.</strong> R, S, T, L and N appear in a huge share of words. Say the order out loud a few times and a child will remember it.</li>
+      <li><strong>Read the pattern, not the letters.</strong> Once a word shows _ I _ E, ask what could fit. This is the step that carries over to reading: recognising that -IKE, -IGHT and -ING behave as units.</li>
+      <li><strong>Use the hint properly.</strong> Read it before guessing, not after four wrong letters. The hint narrows the field to a few dozen words and turns the round into a vocabulary exercise.</li>
+      <li><strong>Say the word when it is done.</strong> Out loud, then use it in a sentence. A word spelled but never spoken does not stick.</li>
+    </ol>
+
+    <h2 style="font-size: 1.45em; color: #4D96FF; margin: 28px 0 8px;">Playing on Hangman4Kids</h2>
+    <p>Pick a difficulty — Easy or Hard — and the game deals a word from the day's theme along with its hint. Tap or type letters. Correct letters fill in, wrong letters grey out on the keyboard so nobody wastes a guess twice, and the counter shows how many chances are left. Win, and confetti falls; either way the next word is one tap away. Words are served in order rather than at random, so a theme is worked through completely before anything repeats.</p>
+    <p>There are 30 themes, from animals and ocean life to space, sports, feelings and jobs. The full contents are published on the if you would like to preview them or print a list for practice away from the screen.</p>
+
+    
+    
+    
+    
+    
+
+    <p style="margin-top: 28px;"><a href="index.html" style="display: inline-block; background: #C2453B; color: #fff; padding: 12px 26px; border-radius: 999px; font-size: 1.05em;">Play →</a></p>
+  </main>
+
+  <footer style="background: #fff; border-top: 4px solid #FFD93D; padding: 22px 18px 30px; text-align: center;">
+    <div style="display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: center; margin-bottom: 12px;">
+      <a href="index.html">Play the game</a>
+      <a href="how-to-play.html">How to Play</a>
+      <a href="word-games-and-reading.html">Word Games &amp; Reading</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+    </div>
+    <div style="color: #6B6259; font-size: 0.9em;">© 2026 Hangman4Kids.com — free word games for young readers.</div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;topBgColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#FFF7E6&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#FFF7E6&quot;, &quot;#E6F7FF&quot;, &quot;#F0FFE6&quot;, &quot;#FFE6F5&quot;]}}"></script>
+</body>
+</html>
